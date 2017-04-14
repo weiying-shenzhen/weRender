@@ -1,0 +1,16 @@
+{
+  "name": "werender",
+  "version": "1.0.0",
+  "description": "canvas render engine",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "canvas",
+    "2d",
+    "engine"
+  ],
+  "author": "ShenZhenDev@wepiao",
+  "license": "MIT"
+}
