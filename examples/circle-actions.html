@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>circle</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <style type="text/css">
+    body{
+      margin: 0;
+    }
+    #container{
+      height: 100vh;
+      width: 100vw;
+    }
+    #canvas{
+      background-color: #fad7d7;
+    }
+  </style>
+</head>
+<body>
+<div id="container">
+  <canvas id="canvas"></canvas>
+</div>
+<script type="text/javascript" src="../dist/weRender.es5.js"></script>
+<script type="text/javascript">
+
+  function replaceActions(actions, method, args){
+    return actions.reduce(function(acc, action){
+      if (action.method == method) {
+        acc.push({
+          type: action.type,
+          method: method,
+          args: args
+        });
+      } else {
+        acc.push(action);
+      }
+      return acc;
+    }, [])
+  }
+
+  var WeStage = weRender.WeStage;
+  var WeCanvas = weRender.WeCanvas;
+
+  var stage = new WeStage(document.querySelector("#canvas"));
+  stage.setSize(500, 500);
+  stage.setStyle("500px", "500px");
+
+  var redCircle = new WeCanvas({
+    width: 100,
+    height: 100,
+    x: 100,
+    y: 50
+  })
+  .beginPath()
+  .fillStyle("red")
+  .arc(50, 50, 50, 0, 2 * Math.PI)
+  .fill();
+
+  var actions = redCircle.getActions();
+
+  var blueCircle = new WeCanvas({
+    actions: replaceActions(actions, "fillStyle", "blue"),
+    width: 100,
+    height: 100,
+    x: 100,
+    y: 200
+  });
+
+  var yellowCircle = new WeCanvas({
+    actions: replaceActions(actions, "fillStyle", "yellow"),
+    width: 100,
+    height: 100,
+    x: 100,
+    y: 350
+  });
+
+  stage.addChild(redCircle);
+  stage.addChild(blueCircle);
+  stage.addChild(yellowCircle);
+  stage.update();
+
+</script>
+</body>
+</html>
