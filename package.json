@@ -4,8 +4,11 @@
   "description": "canvas render engine",
   "main": "index.js",
   "scripts": {
-    "build": "rollup -c",
-    "build:es6": "rollup index.js -f cjs -o dist/werender.es6.js",
+    "build": "rollup -c build/es5.config.js",
+    "build:es6": "rollup -c build/es6.config.js",
+    "pro": "NODE_ENV=production rollup -c build/es5.config.js",
+    "watch": "rollup -c build/es5.config.js -w",
+    "static": "python -m SimpleHTTPServer 8000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -16,9 +19,20 @@
   "author": "ShenZhenDev@wepiao",
   "license": "MIT",
   "devDependencies": {
+    "babel-eslint": "^7.2.2",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-latest": "^6.24.1",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.1.3",
+    "eslint-config-react-app": "^0.6.2",
+    "eslint-plugin-flowtype": "^2.30.4",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3",
     "rollup-plugin-babel": "^2.7.1",
-    "rollup-plugin-node-resolve": "^3.0.0"
+    "rollup-plugin-eslint": "^3.0.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^1.0.1",
+    "rollup-watch": "^3.2.2"
   }
 }
