@@ -11,9 +11,8 @@
  */
 export default class WeCanvas {
   constructor(options) {
-      this._init(options)
       this._rendered = false
-      this._actions = []
+      this._init(options)
       this.width = this.canvas.width
       this.height = this.canvas.height
     }
@@ -186,7 +185,7 @@ export default class WeCanvas {
      *
      * @param {[Array]} actions [actions for context drawing]
      */
-  setActions(actions) {
+  setActions(actions=[]) {
       if (Array.isArray(actions)) {
         this._actions = actions
       }
@@ -213,6 +212,7 @@ export default class WeCanvas {
       if (!this._rendered) {
         this._rendered = true
       }
+      return this
     }
     /**
      * cache
