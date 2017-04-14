@@ -2,30 +2,6 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var classCallCheck = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
-
-var createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
-
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-}();
-
 /**
  *  WeCanvas
  *
@@ -37,50 +13,52 @@ var createClass = function () {
  *  canvas.setSize(100, 100).scale(2, 2).fillRect(0, 0, 10, 10)
  *
  */
-var WeCanvas = function () {
-  function WeCanvas(options) {
-    classCallCheck(this, WeCanvas);
+class WeCanvas {
+  constructor(options) {
+      this._rendered = false;
+      this._init(options);
+      this.width = this.canvas.width;
+      this.height = this.canvas.height;
+    }
+    /**
+     * _initMethods
+     * reduce context methods that need to be bind
+     *
+     * @param  {Array}  methods [context methods]
+     */
+  _initMethods(methods = []) {
+      const retangles = ["clearRect", "fillRect", "strokeRect"];
+      const text = ["fillText", "strokeText", "measureText"];
+      const lineStyles = ["lineWidth", "lineCap", "lineJoin"];
+      const textStyles = ["font", "textAlgin", "textBaseline", "direction"];
+      const fillStrokeStyles = ["fillStyle", "strokeStyle"];
+      const paths = ["beginPath", "closePath", "moveTo", "lineTo", "arc", "arcTo", "rect"];
+      const pathsDrawing = ["fill", "stroke"];
+      const transformations = ["rotate", "scale", "translate", "transform", "resetTransform"];
+      const images = ["drawImage"];
+      const pixel = ["createImageData", "getImageData", "putImageData"];
+      const state = ["save", "restore"];
+      const _methods = [].concat(
+        retangles,
+        text,
+        lineStyles,
+        textStyles,
+        fillStrokeStyles,
+        paths,
+        pathsDrawing,
+        transformations,
+        images,
+        pixel,
+        state,
+        methods
+      );
 
-    this._init(options);
-    this._rendered = false;
-    this._actions = [];
-    this.width = this.canvas.width;
-    this.height = this.canvas.height;
-  }
-  /**
-   * _initMethods
-   * reduce context methods that need to be bind
-   *
-   * @param  {Array}  methods [context methods]
-   */
-
-
-  createClass(WeCanvas, [{
-    key: "_initMethods",
-    value: function _initMethods() {
-      var _this = this;
-
-      var methods = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-
-      var retangles = ["clearRect", "fillRect", "strokeRect"];
-      var text = ["fillText", "strokeText", "measureText"];
-      var lineStyles = ["lineWidth", "lineCap", "lineJoin"];
-      var textStyles = ["font", "textAlgin", "textBaseline", "direction"];
-      var fillStrokeStyles = ["fillStyle", "strokeStyle"];
-      var paths = ["beginPath", "closePath", "moveTo", "lineTo", "arc", "arcTo", "rect"];
-      var pathsDrawing = ["fill", "stroke"];
-      var transformations = ["rotate", "scale", "translate", "transform", "resetTransform"];
-      var images = ["drawImage"];
-      var pixel = ["createImageData", "getImageData", "putImageData"];
-      var state = ["save", "restore"];
-      var _methods = [].concat(retangles, text, lineStyles, textStyles, fillStrokeStyles, paths, pathsDrawing, transformations, images, pixel, state, methods);
-
-      _methods.reduce(function (hash, method) {
+      _methods.reduce((hash, method) => {
         if (!hash[method]) {
-          _this._proxy(method);
+          this._proxy(method);
           hash[method] = true;
         }
-        return hash;
+        return hash
       }, {});
     }
     /**
@@ -95,19 +73,15 @@ var WeCanvas = function () {
      * @param  {[Number]} options.y       [vertical axis]
      * @param  {[Array]}  options.methods [methods for context]
      */
-
-  }, {
-    key: "_init",
-    value: function _init() {
-      var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          canvas = _ref.canvas,
-          actions = _ref.actions,
-          width = _ref.width,
-          height = _ref.height,
-          x = _ref.x,
-          y = _ref.y,
-          methods = _ref.methods;
-
+    _init({
+      canvas,
+      actions,
+      width,
+      height,
+      x,
+      y,
+      methods
+    } = {}){
       this.canvas = canvas || document.createElement('canvas');
       this._ctx = this.canvas.getContext('2d');
       this._initMethods(methods);
@@ -121,36 +95,27 @@ var WeCanvas = function () {
      *
      * @param  {[String]} method [context method or property]
      */
-
-  }, {
-    key: "_proxy",
-    value: function _proxy(method) {
-      var _this2 = this;
-
-      var prop = this._ctx[method];
-      var func = null;
+  _proxy(method) {
+      let prop = this._ctx[method];
+      let func = null;
       if (prop) {
         if (Object.prototype.toString.call(prop) === "[object Function]") {
-          func = function func() {
-            for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-              args[_key] = arguments[_key];
-            }
-
-            _this2._actions.push({
+          func = (...args) => {
+            this._actions.push({
               type: "function",
-              method: method,
-              args: args
+              method,
+              args
             });
-            return _this2;
+            return this
           };
         } else {
-          func = function func(args) {
-            _this2._actions.push({
+          func = (args) => {
+            this._actions.push({
               type: "value",
-              method: method,
-              args: args
+              method,
+              args
             });
-            return _this2;
+            return this
           };
         }
         this[method] = func;
@@ -163,10 +128,7 @@ var WeCanvas = function () {
      * @param {[Number]} width  [canvas width]
      * @param {[Number]} height [canvas height]
      */
-
-  }, {
-    key: "setSize",
-    value: function setSize(width, height) {
+  setSize(width, height) {
       if (width && width !== this.width) {
         this.canvas.width = width;
         this.width = width;
@@ -175,7 +137,7 @@ var WeCanvas = function () {
         this.canvas.height = height;
         this.height = height;
       }
-      return this;
+      return this
     }
     /**
      * setStyle
@@ -184,17 +146,14 @@ var WeCanvas = function () {
      * @param {[String]} width  [canvas style width]
      * @param {[String]} height [canvas style height]
      */
-
-  }, {
-    key: "setStyle",
-    value: function setStyle(width, height) {
+  setStyle(width, height) {
       if (width) {
         this.canvas.style.width = width;
       }
       if (height) {
         this.canvas.style.height = height;
       }
-      return this;
+      return this
     }
     /**
      * setCoordinate
@@ -203,25 +162,16 @@ var WeCanvas = function () {
      * @param {[Number]} x [horizontal axis]
      * @param {[Number]} y [vertical axis]
      */
-
-  }, {
-    key: "setCoordinate",
-    value: function setCoordinate() {
-      var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-      var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-
+  setCoordinate(x = 0, y = 0) {
       this.x = x;
       this.y = y;
-      return this;
+      return this
     }
     /**
      * clear
      * clear canvas
      */
-
-  }, {
-    key: "clear",
-    value: function clear() {
+  clear() {
       this._ctx.clearRect(0, 0, this.width, this.height);
       this.setActions([]);
     }
@@ -230,11 +180,8 @@ var WeCanvas = function () {
      *
      * @return {[Array]} [actions for context drawing]
      */
-
-  }, {
-    key: "getActions",
-    value: function getActions() {
-      return this._actions;
+  getActions() {
+      return this._actions
     }
     /**
      * setActions
@@ -242,10 +189,7 @@ var WeCanvas = function () {
      *
      * @param {[Array]} actions [actions for context drawing]
      */
-
-  }, {
-    key: "setActions",
-    value: function setActions(actions) {
+  setActions(actions=[]) {
       if (Array.isArray(actions)) {
         this._actions = actions;
       }
@@ -254,29 +198,25 @@ var WeCanvas = function () {
      * draw
      * run instructions, draw canvas
      */
+  draw() {
+      const shouldRender = ((!this._rendered ? true : !this._cache) && !!this._actions.length);
+      if (!shouldRender) return
 
-  }, {
-    key: "draw",
-    value: function draw() {
-      var _this3 = this;
-
-      var shouldRender = (!this._rendered ? true : !this._cache) && !!this._actions.length;
-      if (!shouldRender) return;
-
-      this._actions.forEach(function (_ref2) {
-        var type = _ref2.type,
-            method = _ref2.method,
-            args = _ref2.args;
-
+      this._actions.forEach(({
+        type,
+        method,
+        args
+      }) => {
         if (type === "function") {
-          _this3._ctx[method].apply(_this3._ctx, args);
+          this._ctx[method].apply(this._ctx, args);
         } else {
-          _this3._ctx[method] = args;
+          this._ctx[method] = args;
         }
       });
       if (!this._rendered) {
         this._rendered = true;
       }
+      return this
     }
     /**
      * cache
@@ -284,20 +224,13 @@ var WeCanvas = function () {
      *
      * @param  {Boolean} ifCache [if set cache]
      */
-
-  }, {
-    key: "cache",
-    value: function cache() {
-      var ifCache = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-
-      if (typeof ifCache === "boolean") {
-        this._cache = ifCache;
-      }
-      return this;
+  cache(ifCache = true) {
+    if (typeof ifCache === "boolean") {
+      this._cache = ifCache;
     }
-  }]);
-  return WeCanvas;
-}();
+    return this
+  }
+}
 
 /**
  * WeStage
@@ -312,33 +245,25 @@ var WeCanvas = function () {
  *
  */
 
-var WeStage = function () {
-  function WeStage(canvas) {
-    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    classCallCheck(this, WeStage);
-
-    this._canvas = new WeCanvas({
-      canvas: canvas
-    }).cache(false);
-    this._children = [];
-    this._updating = false;
-    this._init(options);
-  }
-  /**
-   * _initOptions
-   * init options for settings
-   *
-   * @param  {[Boolean]} options.autoClear [auto clear stage]
-   * @param  {[Number]} options.ratio     [ratio for init scale]
-   */
-
-
-  createClass(WeStage, [{
-    key: '_initOptions',
-    value: function _initOptions(_ref) {
-      var _ref$clear = _ref.clear,
-          clear = _ref$clear === undefined ? true : _ref$clear;
-
+class WeStage {
+  constructor(canvas, options = {}) {
+      this._canvas = new WeCanvas({
+        canvas
+      }).cache(false);
+      this._children = [];
+      this._updating = false;
+      this._init(options);
+    }
+    /**
+     * _initOptions
+     * init options for settings
+     *
+     * @param  {[Boolean]} options.autoClear [auto clear stage]
+     * @param  {[Number]} options.ratio     [ratio for init scale]
+     */
+  _initOptions({
+      clear = true
+    }) {
       if (typeof clear === "boolean") {
         this._clear = clear;
       }
@@ -349,18 +274,15 @@ var WeStage = function () {
      *
      * @param  {[Object]} options [options]
      */
-
-  }, {
-    key: '_init',
-    value: function _init(options) {
+  _init(options) {
       this._initOptions(options);
-      var _canvas = this._canvas,
-          width = _canvas.width,
-          height = _canvas.height;
-
+      const {
+        width,
+        height
+      } = this._canvas;
       this._offScreenCanvas = new WeCanvas({
-        width: width,
-        height: height
+        width,
+        height
       }).cache(false);
     }
     /**
@@ -370,10 +292,7 @@ var WeStage = function () {
      * @param {[Number]} width  [stage width]
      * @param {[Number]} height [stage height]
      */
-
-  }, {
-    key: 'setSize',
-    value: function setSize(width, height) {
+  setSize(width, height) {
       this._canvas.setSize(width, height);
       this._offScreenCanvas.setSize(width, height);
     }
@@ -384,20 +303,14 @@ var WeStage = function () {
      * @param {[String]} width  [stage style width]
      * @param {[String]} height [stage style height]
      */
-
-  }, {
-    key: 'setStyle',
-    value: function setStyle(width, height) {
+  setStyle(width, height) {
       this._canvas.setStyle(width, height);
     }
     /**
      * destrory
      * destrory stage
      */
-
-  }, {
-    key: 'destory',
-    value: function destory() {
+  destory() {
       this._canvas = null;
       this._offScreenCanvas = null;
       this._children = [];
@@ -406,24 +319,18 @@ var WeStage = function () {
      * clear
      * @return {[type]} [description]
      */
+  clear() {
+    this._offScreenCanvas.clear();
+    this._canvas.clear();
+  }
 
-  }, {
-    key: 'clear',
-    value: function clear() {
-      this._offScreenCanvas.clear();
-      this._canvas.clear();
-    }
-
-    /**
-     * addChild
-     * add child to the stage
-     *
-     * @param {[WeCanvas or Object]} child [WeCanvas instance or Object cotains Canvas]
-     */
-
-  }, {
-    key: 'addChild',
-    value: function addChild(child) {
+  /**
+   * addChild
+   * add child to the stage
+   *
+   * @param {[WeCanvas or Object]} child [WeCanvas instance or Object cotains Canvas]
+   */
+  addChild(child) {
       if (child instanceof WeCanvas || child.canvas.getContext('2d')) {
         this._children.push(child);
       }
@@ -436,18 +343,11 @@ var WeStage = function () {
      * @param  {Number}  y     [offset y]
      * @param  {Boolean} reset [should reset after update]
      */
-
-  }, {
-    key: 'translate',
-    value: function translate() {
-      var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-      var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-      var reset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
+  translate(x = 0, y = 0, reset = false) {
       if (typeof x === "number" && typeof y === "number") {
         this._coordinate = {
-          x: x,
-          y: y
+          x,
+          y
         };
       }
       if (typeof reset === "boolean") {
@@ -458,11 +358,8 @@ var WeStage = function () {
      * update
      * update stage, draw canvas
      */
-
-  }, {
-    key: 'update',
-    value: function update() {
-      if (!this._children.length || this._updating) return;
+  update() {
+      if (!this._children.length || this._updating) return
       this._updating = true;
       if (this._clear) {
         this.clear();
@@ -479,15 +376,11 @@ var WeStage = function () {
      * _translateStage
      * translate offscreen canvas
      */
-
-  }, {
-    key: '_translateStage',
-    value: function _translateStage() {
+  _translateStage() {
       if (this._coordinate) {
-        var _coordinate = this._coordinate,
-            x = _coordinate.x,
-            y = _coordinate.y;
-
+        const {
+          x, y
+        } = this._coordinate;
         this._offScreenCanvas.translate(x, y);
       }
     }
@@ -495,15 +388,12 @@ var WeStage = function () {
      * _resetCoordinate
      * reset coordinate of off screen canvas
      */
-
-  }, {
-    key: '_resetCoordinate',
-    value: function _resetCoordinate() {
+  _resetCoordinate() {
       if (this._translateReset) {
-        var _coordinate2 = this._coordinate,
-            x = _coordinate2.x,
-            y = _coordinate2.y;
-
+        const {
+          x,
+          y
+        } = this._coordinate;
         this._offScreenCanvas.translate(-x, -y);
         this._coordinate = null;
       }
@@ -512,17 +402,12 @@ var WeStage = function () {
      * _drawChildren
      * draw children on offscreen canvas
      */
-
-  }, {
-    key: '_drawChildren',
-    value: function _drawChildren() {
-      var _this = this;
-
-      this._children.forEach(function (child) {
+  _drawChildren() {
+      this._children.forEach((child) => {
         if (child instanceof WeCanvas) {
-          _this._drawChild(child);
+          this._drawChild(child);
         } else {
-          _this._drawChildCanvas(child);
+          this._drawChildCanvas(child);
         }
       });
     }
@@ -532,16 +417,14 @@ var WeStage = function () {
      *
      * @param  {[WeCanvas]} child [a WeCanvas isntance]
      */
-
-  }, {
-    key: '_drawChild',
-    value: function _drawChild(child) {
-      var canvas = child.canvas,
-          x = child.x,
-          y = child.y,
-          width = child.width,
-          height = child.height;
-
+  _drawChild(child) {
+      const {
+        canvas,
+        x,
+        y,
+        width,
+        height
+      } = child;
       child.draw();
       this._offScreenCanvas.drawImage(canvas, x, y, width, height);
     }
@@ -553,32 +436,22 @@ var WeStage = function () {
      * @param  {[Number]} options.y      [vertical axis]
      * @param  {[Canvas]} options.canvas   [Canvas]
      */
-
-  }, {
-    key: '_drawChildCanvas',
-    value: function _drawChildCanvas(_ref2) {
-      var _ref2$x = _ref2.x,
-          x = _ref2$x === undefined ? 0 : _ref2$x,
-          _ref2$y = _ref2.y,
-          y = _ref2$y === undefined ? 0 : _ref2$y,
-          canvas = _ref2.canvas;
-
+  _drawChildCanvas({
+      x = 0,
+      y = 0,
+      canvas
+    }) {
       this._offScreenCanvas.drawImage(canvas, x, y, canvas.width, canvas.height);
     }
     /**
      * _updateStage
      * draw offScreen canvas to dom canvas
      */
-
-  }, {
-    key: '_updateStage',
-    value: function _updateStage() {
-      this._canvas.drawImage(this._offScreenCanvas.canvas, 0, 0);
-      this._canvas.draw();
-    }
-  }]);
-  return WeStage;
-}();
+  _updateStage() {
+    this._canvas.drawImage(this._offScreenCanvas.canvas, 0, 0);
+    this._canvas.draw();
+  }
+}
 
 exports.WeCanvas = WeCanvas;
 exports.WeStage = WeStage;
