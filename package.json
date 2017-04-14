@@ -4,6 +4,8 @@
   "description": "canvas render engine",
   "main": "index.js",
   "scripts": {
+    "build": "rollup -c",
+    "build:es6": "rollup index.js -f cjs -o dist/werender.es6.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -12,5 +14,11 @@
     "engine"
   ],
   "author": "ShenZhenDev@wepiao",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-latest": "^6.24.1",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-node-resolve": "^3.0.0"
+  }
 }
