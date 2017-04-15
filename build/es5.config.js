@@ -8,7 +8,7 @@ const isProduction = process.env.NODE_ENV === 'production'
 export default {
   entry: 'src/index.js',
   moduleName: "weRender",
-  format: 'iife',
+  format: 'umd',
   plugins: [
     resolve(),
     babel({
@@ -21,5 +21,5 @@ export default {
     }),
     ( isProduction && uglify())
   ],
-  dest: isProduction ? 'dist/weRender.min.js' : 'dist/weRender.es5.js'
+  dest: isProduction ? 'dist/weRender.min.js' : 'dist/weRender.js'
 };

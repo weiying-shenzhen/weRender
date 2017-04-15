@@ -1,22 +1,25 @@
 {
-  "name": "werender",
+  "name": "weRender",
   "version": "1.0.0",
   "description": "canvas render engine",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "build": "rollup -c build/es5.config.js",
     "build:es6": "rollup -c build/es6.config.js",
     "pro": "NODE_ENV=production rollup -c build/es5.config.js",
     "watch": "rollup -c build/es5.config.js -w",
     "static": "python -m SimpleHTTPServer 8000",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "doc": "./node_modules/.bin/jsdoc2md -t build/README.template.md -f src/*.js > README.md"
   },
   "keywords": [
     "canvas",
     "2d",
+    "render",
+    "easy",
+    "light-weight",
     "engine"
   ],
-  "author": "ShenZhenDev@wepiao",
+  "author": "henryluki",
   "license": "MIT",
   "devDependencies": {
     "babel-eslint": "^7.2.2",
@@ -29,6 +32,7 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
+    "jsdoc-to-markdown": "^3.0.0",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-eslint": "^3.0.0",
     "rollup-plugin-node-resolve": "^3.0.0",
