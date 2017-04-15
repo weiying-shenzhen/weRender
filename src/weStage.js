@@ -1,19 +1,15 @@
+import WeCanvas from './weCanvas'
 /**
- * WeStage
- *
- * Canvas manager for WeCanvas
- *
- * Example:
- *
- * const stage = new WeStage()
- * stage.addChid(child)
- * stage.update()
+ * WeStage: Canvas manager for WeCanvas
  *
  */
-
-import WeCanvas from './weCanvas'
-
-export default class WeStage {
+class WeStage {
+  /**
+   * create a WeStage instance
+   *
+   * @param  {Canvas} canvas  - a Canvas element related to the dom
+   * @param  {Object} options - stage settings
+   */
   constructor(canvas, options = {}) {
       this._canvas = new WeCanvas({
         canvas
@@ -23,11 +19,10 @@ export default class WeStage {
       this._init(options)
     }
     /**
-     * _initOptions
      * init options for settings
      *
-     * @param  {[Boolean]} options.autoClear [auto clear stage]
-     * @param  {[Number]} options.ratio     [ratio for init scale]
+     * @private
+     * @param  {Boolean} options.clear - auto clear stage
      */
   _initOptions({
       clear = true
@@ -37,10 +32,10 @@ export default class WeStage {
       }
     }
     /**
-     * _init
      * init
      *
-     * @param  {[Object]} options [options]
+     * @private
+     * @param  {Object} options - options
      */
   _init(options) {
       this._initOptions(options)
@@ -54,28 +49,25 @@ export default class WeStage {
       }).cache(false)
     }
     /**
-     * setSize
      * set stage size
      *
-     * @param {[Number]} width  [stage width]
-     * @param {[Number]} height [stage height]
+     * @param {Number} width  - stage width
+     * @param {Number} height - stage height
      */
   setSize(width, height) {
       this._canvas.setSize(width, height)
       this._offScreenCanvas.setSize(width, height)
     }
     /**
-     * setStyle
      * set stage style
      *
-     * @param {[String]} width  [stage style width]
-     * @param {[String]} height [stage style height]
+     * @param {String} width  - stage style width
+     * @param {String} height - stage style height
      */
   setStyle(width, height) {
       this._canvas.setStyle(width, height)
     }
     /**
-     * destrory
      * destrory stage
      */
   destory() {
@@ -84,8 +76,7 @@ export default class WeStage {
       this._children = []
     }
     /**
-     * clear
-     * @return {[type]} [description]
+     * clear canvas
      */
   clear() {
     this._offScreenCanvas.clear()
@@ -93,10 +84,9 @@ export default class WeStage {
   }
 
   /**
-   * addChild
    * add child to the stage
    *
-   * @param {[WeCanvas or Object]} child [WeCanvas instance or Object cotains Canvas]
+   * @param {WeCanvas|Object} child - WeCanvas instance or Object cotains Canvas
    */
   addChild(child) {
       if (child instanceof WeCanvas || child.canvas.getContext('2d')) {
@@ -104,12 +94,11 @@ export default class WeStage {
       }
     }
     /**
-     * translate
      * translate stage, move coordinate
      *
-     * @param  {Number}  x     [offset x]
-     * @param  {Number}  y     [offset y]
-     * @param  {Boolean} reset [should reset after update]
+     * @param  {Number}  x     - offset x
+     * @param  {Number}  y     - offset y
+     * @param  {Boolean} reset - should reset after update
      */
   translate(x = 0, y = 0, reset = false) {
       if (typeof x === "number" && typeof y === "number") {
@@ -123,8 +112,8 @@ export default class WeStage {
       }
     }
     /**
-     * update
-     * update stage, draw canvas
+     * update stage, draw child on canvas
+     * **run this method, all child canvas will draw**
      */
   update() {
       if (!this._children.length || this._updating) return
@@ -141,20 +130,21 @@ export default class WeStage {
       this._children = []
     }
     /**
-     * _translateStage
      * translate offscreen canvas
+     * @private
      */
   _translateStage() {
       if (this._coordinate) {
         const {
-          x, y
+          x,
+          y
         } = this._coordinate
         this._offScreenCanvas.translate(x, y)
       }
     }
     /**
-     * _resetCoordinate
      * reset coordinate of off screen canvas
+     * @private
      */
   _resetCoordinate() {
       if (this._translateReset) {
@@ -167,8 +157,8 @@ export default class WeStage {
       }
     }
     /**
-     * _drawChildren
      * draw children on offscreen canvas
+     * @private
      */
   _drawChildren() {
       this._children.forEach((child) => {
@@ -180,10 +170,10 @@ export default class WeStage {
       })
     }
     /**
-     * _drawChild
      * draw child, which is a instance of WeCanvas
      *
-     * @param  {[WeCanvas]} child [a WeCanvas isntance]
+     * @private
+     * @param  {WeCanvas} child - a WeCanvas instance
      */
   _drawChild(child) {
       const {
@@ -197,12 +187,12 @@ export default class WeStage {
       this._offScreenCanvas.drawImage(canvas, x, y, width, height)
     }
     /**
-     * _drawChildCanvas
      * draw child, which is a raw Canvas element
      *
-     * @param  {[Number]} options.x      [horizontal axis]
-     * @param  {[Number]} options.y      [vertical axis]
-     * @param  {[Canvas]} options.canvas   [Canvas]
+     * @private
+     * @param  {Number} options.x      - horizontal axis
+     * @param  {Number} options.y      - vertical axis
+     * @param  {Canvas} options.canvas   - Canvas
      */
   _drawChildCanvas({
       x = 0,
@@ -212,11 +202,13 @@ export default class WeStage {
       this._offScreenCanvas.drawImage(canvas, x, y, canvas.width, canvas.height)
     }
     /**
-     * _updateStage
      * draw offScreen canvas to dom canvas
+     * @private
      */
   _updateStage() {
     this._canvas.drawImage(this._offScreenCanvas.canvas, 0, 0)
     this._canvas.draw()
   }
 }
+
+export default WeStage

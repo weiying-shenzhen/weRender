@@ -1,15 +1,17 @@
 /**
- *  WeCanvas
+ * WeCanvas: Easy canvas api for using, support useing chain
  *
- *  Easy canvas api for using, support use chain
- *
- *  Example:
- *
- *  const canvas = new WeCanvas()
- *  canvas.setSize(100, 100).scale(2, 2).fillRect(0, 0, 10, 10)
+ * - Directly use <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D">CanvasRenderingContext2D</a>` methods`
+ * - `Property` of `CanvasRenderingContext2D` here is `method`
+ * - Won't really drawing Canvas until run `draw()`
  *
  */
-export default class WeCanvas {
+class WeCanvas {
+  /**
+   * create a WeCanvas instance
+   *
+   * @param  {Object} options - option settions for instance
+   */
   constructor(options) {
       this._rendered = false
       this._init(options)
@@ -17,10 +19,10 @@ export default class WeCanvas {
       this.height = this.canvas.height
     }
     /**
-     * _initMethods
      * reduce context methods that need to be bind
      *
-     * @param  {Array}  methods [context methods]
+     * @private
+     * @param  {Array}  methods - context methods
      */
   _initMethods(methods = []) {
       const retangles = ["clearRect", "fillRect", "strokeRect"]
@@ -58,18 +60,18 @@ export default class WeCanvas {
       }, {})
     }
     /**
-     * _init
      * init
      *
-     * @param  {[Canvas]} options.canvas  [canvas element]
-     * @param  {[Array]}  options.actions [context drawing actions]
-     * @param  {[Number]} options.width   [canvas witdh]
-     * @param  {[Number]} options.height  [canvas height]
-     * @param  {[Number]} options.x       [horizontal axis]
-     * @param  {[Number]} options.y       [vertical axis]
-     * @param  {[Array]}  options.methods [methods for context]
+     * @private
+     * @param  {Canvas} options.canvas  - canvas element
+     * @param  {Array}  options.actions - context drawing actions
+     * @param  {Number} options.width   - canvas witdh
+     * @param  {Number} options.height  - canvas height
+     * @param  {Number} options.x       - horizontal axis
+     * @param  {Number} options.y       - vertical axis
+     * @param  {Array}  options.methods - methods for context
      */
-    _init({
+  _init({
       canvas,
       actions,
       width,
@@ -77,7 +79,7 @@ export default class WeCanvas {
       x,
       y,
       methods
-    } = {}){
+    } = {}) {
       this.canvas = canvas || document.createElement('canvas')
       this._ctx = this.canvas.getContext('2d')
       this._initMethods(methods)
@@ -86,10 +88,10 @@ export default class WeCanvas {
       this.setActions(actions)
     }
     /**
-     * _proxy
      * bind context method or property to this instance
      *
-     * @param  {[String]} method [context method or property]
+     * @private
+     * @param  {String} method - context method or property
      */
   _proxy(method) {
       let prop = this._ctx[method]
@@ -118,11 +120,10 @@ export default class WeCanvas {
       }
     }
     /**
-     * setSize
      * set canvas size
      *
-     * @param {[Number]} width  [canvas width]
-     * @param {[Number]} height [canvas height]
+     * @param {Number} width  - canvas width
+     * @param {Number} height - canvas height
      */
   setSize(width, height) {
       if (width && width !== this.width) {
@@ -136,11 +137,10 @@ export default class WeCanvas {
       return this
     }
     /**
-     * setStyle
      * set canvas style, only width and height
      *
-     * @param {[String]} width  [canvas style width]
-     * @param {[String]} height [canvas style height]
+     * @param {String} width  - canvas style width
+     * @param {String} height - canvas style height
      */
   setStyle(width, height) {
       if (width) {
@@ -152,11 +152,10 @@ export default class WeCanvas {
       return this
     }
     /**
-     * setCoordinate
      * set coordinate of stage
      *
-     * @param {[Number]} x [horizontal axis]
-     * @param {[Number]} y [vertical axis]
+     * @param {Number} x - horizontal axis
+     * @param {Number} y - vertical axis
      */
   setCoordinate(x = 0, y = 0) {
       this.x = x
@@ -164,7 +163,6 @@ export default class WeCanvas {
       return this
     }
     /**
-     * clear
      * clear canvas
      */
   clear() {
@@ -172,27 +170,23 @@ export default class WeCanvas {
       this.setActions([])
     }
     /**
-     * getActions
-     *
-     * @return {[Array]} [actions for context drawing]
+     * get actions for context drawing
      */
   getActions() {
       return this._actions
     }
     /**
-     * setActions
      * set actions
      *
-     * @param {[Array]} actions [actions for context drawing]
+     * @param {Array} actions - actions for context drawing
      */
-  setActions(actions=[]) {
+  setActions(actions = []) {
       if (Array.isArray(actions)) {
         this._actions = actions
       }
     }
     /**
-     * draw
-     * run instructions, draw canvas
+     * run actions, draw canvas
      */
   draw() {
       const shouldRender = ((!this._rendered ? true : !this._cache) && !!this._actions.length)
@@ -215,10 +209,9 @@ export default class WeCanvas {
       return this
     }
     /**
-     * cache
      * set cache, default: true
      *
-     * @param  {Boolean} ifCache [if set cache]
+     * @param  {Boolean} ifCache - if set cache
      */
   cache(ifCache = true) {
     if (typeof ifCache === "boolean") {
@@ -227,3 +220,5 @@ export default class WeCanvas {
     return this
   }
 }
+
+export default WeCanvas
