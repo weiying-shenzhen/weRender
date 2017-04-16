@@ -10,5 +10,5 @@ export default {
       ]
     })
   ],
-  dest: 'dist/weRender.js'
+  dest: 'dist/weRender.es6.js'
 };

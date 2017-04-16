@@ -324,17 +324,23 @@ var WeStage = function () {
    *
    * @private
    * @param  {Boolean} options.clear - auto clear stage
+   * @param  {Number} options.ratio  - zoom down level when draw child Canvas
    */
 
 
   createClass(WeStage, [{
-    key: '_initOptions',
+    key: "_initOptions",
     value: function _initOptions(_ref) {
       var _ref$clear = _ref.clear,
-          clear = _ref$clear === undefined ? true : _ref$clear;
+          clear = _ref$clear === undefined ? true : _ref$clear,
+          _ref$ratio = _ref.ratio,
+          ratio = _ref$ratio === undefined ? 1 : _ref$ratio;
 
       if (typeof clear === "boolean") {
         this._clear = clear;
+      }
+      if (typeof ratio === "number") {
+        this._ratio = ratio;
       }
     }
     /**
@@ -345,7 +351,7 @@ var WeStage = function () {
      */
 
   }, {
-    key: '_init',
+    key: "_init",
     value: function _init(options) {
       this._initOptions(options);
       var _canvas = this._canvas,
@@ -365,7 +371,7 @@ var WeStage = function () {
      */
 
   }, {
-    key: 'setSize',
+    key: "setSize",
     value: function setSize(width, height) {
       this._canvas.setSize(width, height);
       this._offScreenCanvas.setSize(width, height);
@@ -378,7 +384,7 @@ var WeStage = function () {
      */
 
   }, {
-    key: 'setStyle',
+    key: "setStyle",
     value: function setStyle(width, height) {
       this._canvas.setStyle(width, height);
     }
@@ -387,7 +393,7 @@ var WeStage = function () {
      */
 
   }, {
-    key: 'destory',
+    key: "destory",
     value: function destory() {
       this._canvas = null;
       this._offScreenCanvas = null;
@@ -398,7 +404,7 @@ var WeStage = function () {
      */
 
   }, {
-    key: 'clear',
+    key: "clear",
     value: function clear() {
       this._offScreenCanvas.clear();
       this._canvas.clear();
@@ -411,7 +417,7 @@ var WeStage = function () {
      */
 
   }, {
-    key: 'addChild',
+    key: "addChild",
     value: function addChild(child) {
       if (child instanceof WeCanvas || child.canvas.getContext('2d')) {
         this._children.push(child);
@@ -426,7 +432,7 @@ var WeStage = function () {
      */
 
   }, {
-    key: 'translate',
+    key: "translate",
     value: function translate() {
       var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
       var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
@@ -448,7 +454,7 @@ var WeStage = function () {
      */
 
   }, {
-    key: 'update',
+    key: "update",
     value: function update() {
       if (!this._children.length || this._updating) return;
       this._updating = true;
@@ -469,7 +475,7 @@ var WeStage = function () {
      */
 
   }, {
-    key: '_translateStage',
+    key: "_translateStage",
     value: function _translateStage() {
       if (this._coordinate) {
         var _coordinate = this._coordinate,
@@ -485,7 +491,7 @@ var WeStage = function () {
      */
 
   }, {
-    key: '_resetCoordinate',
+    key: "_resetCoordinate",
     value: function _resetCoordinate() {
       if (this._translateReset) {
         var _coordinate2 = this._coordinate,
@@ -502,7 +508,7 @@ var WeStage = function () {
      */
 
   }, {
-    key: '_drawChildren',
+    key: "_drawChildren",
     value: function _drawChildren() {
       var _this = this;
 
@@ -522,7 +528,7 @@ var WeStage = function () {
      */
 
   }, {
-    key: '_drawChild',
+    key: "_drawChild",
     value: function _drawChild(child) {
       var canvas = child.canvas,
           x = child.x,
@@ -531,7 +537,7 @@ var WeStage = function () {
           height = child.height;
 
       child.draw();
-      this._offScreenCanvas.drawImage(canvas, x, y, width, height);
+      this._offScreenCanvas.drawImage(canvas, x, y, width / this._ratio, height / this._ratio);
     }
     /**
      * draw child, which is a raw Canvas element
@@ -543,7 +549,7 @@ var WeStage = function () {
      */
 
   }, {
-    key: '_drawChildCanvas',
+    key: "_drawChildCanvas",
     value: function _drawChildCanvas(_ref2) {
       var _ref2$x = _ref2.x,
           x = _ref2$x === undefined ? 0 : _ref2$x,
@@ -551,7 +557,7 @@ var WeStage = function () {
           y = _ref2$y === undefined ? 0 : _ref2$y,
           canvas = _ref2.canvas;
 
-      this._offScreenCanvas.drawImage(canvas, x, y, canvas.width, canvas.height);
+      this._offScreenCanvas.drawImage(canvas, x, y, canvas.width / this._ratio, canvas.height / this._ratio);
     }
     /**
      * draw offScreen canvas to dom canvas
@@ -559,7 +565,7 @@ var WeStage = function () {
      */
 
   }, {
-    key: '_updateStage',
+    key: "_updateStage",
     value: function _updateStage() {
       this._canvas.drawImage(this._offScreenCanvas.canvas, 0, 0);
       this._canvas.draw();

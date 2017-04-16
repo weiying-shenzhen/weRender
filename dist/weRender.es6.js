@@ -3,12 +3,12 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 /**
- * WeCanvas: Easy canvas api for using, support use chain
+ * WeCanvas: Easy canvas api for using, support useing chain
  *
- * @example
+ * - Directly use <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D">CanvasRenderingContext2D</a>` methods`
+ * - `Property` of `CanvasRenderingContext2D` here is `method`
+ * - Won't really drawing Canvas until run `draw()`
  *
- * const canvas = new WeCanvas()
- * canvas.setSize(100, 100).scale(2, 2).fillRect(0, 0, 10, 10)
  */
 class WeCanvas {
   /**
@@ -75,7 +75,7 @@ class WeCanvas {
      * @param  {Number} options.y       - vertical axis
      * @param  {Array}  options.methods - methods for context
      */
-    _init({
+  _init({
       canvas,
       actions,
       width,
@@ -83,7 +83,7 @@ class WeCanvas {
       x,
       y,
       methods
-    } = {}){
+    } = {}) {
       this.canvas = canvas || document.createElement('canvas');
       this._ctx = this.canvas.getContext('2d');
       this._initMethods(methods);
@@ -184,7 +184,7 @@ class WeCanvas {
      *
      * @param {Array} actions - actions for context drawing
      */
-  setActions(actions=[]) {
+  setActions(actions = []) {
       if (Array.isArray(actions)) {
         this._actions = actions;
       }
@@ -228,12 +228,6 @@ class WeCanvas {
 /**
  * WeStage: Canvas manager for WeCanvas
  *
- * @example
- *
- * const stage = new WeStage()
- * stage.addChid(child)
- * stage.update()
- *
  */
 class WeStage {
   /**
@@ -255,12 +249,17 @@ class WeStage {
      *
      * @private
      * @param  {Boolean} options.clear - auto clear stage
+     * @param  {Number} options.ratio  - zoom down level when draw child Canvas
      */
   _initOptions({
-      clear = true
+      clear = true,
+      ratio = 1
     }) {
       if (typeof clear === "boolean") {
         this._clear = clear;
+      }
+      if (typeof ratio === "number") {
+        this._ratio = ratio;
       }
     }
     /**
@@ -344,7 +343,8 @@ class WeStage {
       }
     }
     /**
-     * update stage, draw canvas
+     * update stage, draw child on canvas
+     * **run this method, all child canvas will draw**
      */
   update() {
       if (!this._children.length || this._updating) return
@@ -367,7 +367,8 @@ class WeStage {
   _translateStage() {
       if (this._coordinate) {
         const {
-          x, y
+          x,
+          y
         } = this._coordinate;
         this._offScreenCanvas.translate(x, y);
       }
@@ -414,7 +415,7 @@ class WeStage {
         height
       } = child;
       child.draw();
-      this._offScreenCanvas.drawImage(canvas, x, y, width, height);
+      this._offScreenCanvas.drawImage(canvas, x, y, width / this._ratio, height / this._ratio);
     }
     /**
      * draw child, which is a raw Canvas element
@@ -429,7 +430,7 @@ class WeStage {
       y = 0,
       canvas
     }) {
-      this._offScreenCanvas.drawImage(canvas, x, y, canvas.width, canvas.height);
+      this._offScreenCanvas.drawImage(canvas, x, y, canvas.width / this._ratio, canvas.height / this._ratio);
     }
     /**
      * draw offScreen canvas to dom canvas
