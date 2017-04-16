@@ -23,12 +23,17 @@ class WeStage {
      *
      * @private
      * @param  {Boolean} options.clear - auto clear stage
+     * @param  {Number} options.ratio  - zoom down level when draw child Canvas
      */
   _initOptions({
-      clear = true
+      clear = true,
+      ratio = 1
     }) {
       if (typeof clear === "boolean") {
         this._clear = clear
+      }
+      if (typeof ratio === "number") {
+        this._ratio = ratio
       }
     }
     /**
@@ -184,7 +189,7 @@ class WeStage {
         height
       } = child
       child.draw()
-      this._offScreenCanvas.drawImage(canvas, x, y, width, height)
+      this._offScreenCanvas.drawImage(canvas, x, y, width / this._ratio, height / this._ratio)
     }
     /**
      * draw child, which is a raw Canvas element
@@ -199,7 +204,7 @@ class WeStage {
       y = 0,
       canvas
     }) {
-      this._offScreenCanvas.drawImage(canvas, x, y, canvas.width, canvas.height)
+      this._offScreenCanvas.drawImage(canvas, x, y, canvas.width / this._ratio, canvas.height / this._ratio)
     }
     /**
      * draw offScreen canvas to dom canvas
