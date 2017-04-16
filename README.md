@@ -71,6 +71,8 @@ stage.update();
 
 * <a href="examples/circle-composite.html">composite</a>
 
+* <a href="examples/circle-zoom.html">zoom</a>
+
 # API reference
 
 ## Modules

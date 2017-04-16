@@ -8,7 +8,7 @@
     "build:es6": "rollup -c build/es6.config.js",
     "pro": "NODE_ENV=production rollup -c build/es5.config.js",
     "watch": "rollup -c build/es5.config.js -w",
-    "static": "python -m SimpleHTTPServer 8000",
+    "static": "cd examples && python -m SimpleHTTPServer 8000",
     "doc": "./node_modules/.bin/jsdoc2md -t build/README.template.md -f src/*.js > README.md"
   },
   "keywords": [
