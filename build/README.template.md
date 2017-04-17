@@ -63,6 +63,7 @@ stage.update();
 
 # Examples
 
+See examples:
 `npm run static`
 
 * <a href="examples/index.html">simple</a>

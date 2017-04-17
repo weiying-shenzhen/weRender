@@ -63,9 +63,12 @@ stage.update();
 
 # Examples
 
+See examples:
+`npm run static`
+
 * <a href="examples/index.html">simple</a>
 
-* <a href="examples/circle-cache">cache</a>
+* <a href="examples/circle-clone">clone</a>
 
 * <a href="examples/circle-actions.html">reuse actions</a>
 
