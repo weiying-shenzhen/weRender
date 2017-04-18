@@ -11,4 +11,4 @@
 node path.js -i input.svg -o out.js
 
 ```
-例子：<a href="../examples/path">path</a>
+例子：查看 `examples/path` 目录下的代码
