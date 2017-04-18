@@ -76,8 +76,8 @@ var WeCanvas = function () {
       var images = ["drawImage"];
       var pixel = ["createImageData", "getImageData", "putImageData"];
       var state = ["save", "restore"];
-      var _methods = [].concat(retangles, text, lineStyles, textStyles, fillStrokeStyles, paths, pathsDrawing, transformations, images, pixel, state, methods);
-
+      var shadow = ['shadowColor', 'shadowBlur'];
+      var _methods = [].concat(retangles, text, lineStyles, textStyles, fillStrokeStyles, paths, pathsDrawing, transformations, images, pixel, state, shadow, methods);
       _methods.reduce(function (hash, method) {
         if (!hash[method]) {
           _this._proxy(method);
@@ -132,7 +132,7 @@ var WeCanvas = function () {
 
       var prop = this._ctx[method];
       var func = null;
-      if (prop) {
+      if (prop !== 'undefined') {
         if (Object.prototype.toString.call(prop) === "[object Function]") {
           func = function func() {
             for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
@@ -295,6 +295,11 @@ var WeCanvas = function () {
   }]);
   return WeCanvas;
 }();
+
+/**
+ * WeStage: Canvas manager for WeCanvas
+ *
+ */
 
 var WeStage = function () {
   /**

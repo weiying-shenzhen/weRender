@@ -40,6 +40,7 @@ class WeCanvas {
       const images = ["drawImage"];
       const pixel = ["createImageData", "getImageData", "putImageData"];
       const state = ["save", "restore"];
+      const shadow = ['shadowColor', 'shadowBlur'];
       const _methods = [].concat(
         retangles,
         text,
@@ -52,9 +53,9 @@ class WeCanvas {
         images,
         pixel,
         state,
+        shadow,
         methods
       );
-
       _methods.reduce((hash, method) => {
         if (!hash[method]) {
           this._proxy(method);
@@ -100,7 +101,7 @@ class WeCanvas {
   _proxy(method) {
       let prop = this._ctx[method];
       let func = null;
-      if (prop) {
+      if (prop !== 'undefined') {
         if (Object.prototype.toString.call(prop) === "[object Function]") {
           func = (...args) => {
             this._actions.push({
