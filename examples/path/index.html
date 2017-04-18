@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>circle</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <style type="text/css">
+    body{
+      margin: 0;
+    }
+    #container{
+      height: 100vh;
+      width: 100vw;
+    }
+  </style>
+</head>
+<body>
+<div id="container">
+  <canvas id="canvas"></canvas>
+</div>
+<script type="text/javascript" src="../lib/weRender.min.js"></script>
+<script type="text/javascript">
+  var WeStage = weRender.WeStage;
+  var WeCanvas = weRender.WeCanvas;
+
+  var stage = new WeStage(document.querySelector("#canvas"));
+  stage.setSize(500, 500);
+  stage.setStyle("500px", "500px");
+  var scale = 5;
+  var seat = new WeCanvas({ width: 23 * scale, height: 23 * scale, x: 200, y: 200 })
+      .scale(scale, scale)
+      .beginPath()
+      .fillStyle("#EF595D")
+      .moveTo(20.125,9.10416667)
+      .lineTo(20.6680645,9.10416667)
+      .bezierCurveTo(21.9559569,9.10416667,23,10.1508348,23,11.4314182)
+      .lineTo(23,11.4314182)
+      .bezierCurveTo(23,20.5618566,21.9993593,21.5854121,20.7557712,21.6315714)
+      .bezierCurveTo(20.7559884,21.6407142,20.7560976,21.6498798,20.7560976,21.6590668)
+      .lineTo(20.7560976,21.6590668)
+      .bezierCurveTo(20.7560976,22.4784687,20.246304,23,19.5966715,23)
+      .lineTo(4.24479191,23)
+      .bezierCurveTo(3.60445858,23,3.08536585,22.468583,3.08536585,21.8351272)
+      .lineTo(3.08536585,21.8351272)
+      .bezierCurveTo(3.08536585,21.6504211,3.08545792,21.6417974,3.08564116,21.6331967)
+      .lineTo(2.33193548,21.6331967)
+      .bezierCurveTo(1.04404308,21.6331967,0,20.5865286,0,19.3059452)
+      .lineTo(0,19.3059452)
+      .bezierCurveTo(0,10.1461127,1.04802811,9.10416667,2.33193548,9.10416667)
+      .lineTo(2.875,9.10416667)
+      .lineTo(2.875,9.10416667)
+      .bezierCurveTo(2.875,3.92291528,6.73549668,0,11.5,0)
+      .bezierCurveTo(16.263456,0,20.125,3.92716382,20.125,8.76207651)
+      .lineTo(20.125,8.76207651)
+      .lineTo(20.125,8.76207651)
+      .closePath()
+      .fill()
+
+  stage.addChild(seat)
+  stage.update()
+
+</script>
+</body>
+</html>
