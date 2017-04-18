@@ -70,7 +70,7 @@ var WeCanvas = function () {
       var lineStyles = ["lineWidth", "lineCap", "lineJoin"];
       var textStyles = ["font", "textAlgin", "textBaseline", "direction"];
       var fillStrokeStyles = ["fillStyle", "strokeStyle"];
-      var paths = ["beginPath", "closePath", "moveTo", "lineTo", "arc", "arcTo", "rect"];
+      var paths = ["beginPath", "closePath", "moveTo", "lineTo", "bezierCurveTo", "quadraticCurveTo", "arc", "arcTo", "rect"];
       var pathsDrawing = ["fill", "stroke"];
       var transformations = ["rotate", "scale", "translate", "transform", "resetTransform"];
       var images = ["drawImage"];
@@ -295,11 +295,6 @@ var WeCanvas = function () {
   }]);
   return WeCanvas;
 }();
-
-/**
- * WeStage: Canvas manager for WeCanvas
- *
- */
 
 var WeStage = function () {
   /**

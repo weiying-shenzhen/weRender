@@ -34,7 +34,7 @@ class WeCanvas {
       const lineStyles = ["lineWidth", "lineCap", "lineJoin"];
       const textStyles = ["font", "textAlgin", "textBaseline", "direction"];
       const fillStrokeStyles = ["fillStyle", "strokeStyle"];
-      const paths = ["beginPath", "closePath", "moveTo", "lineTo", "arc", "arcTo", "rect"];
+      const paths = ["beginPath", "closePath", "moveTo", "lineTo", "bezierCurveTo", "quadraticCurveTo", "arc", "arcTo", "rect"];
       const pathsDrawing = ["fill", "stroke"];
       const transformations = ["rotate", "scale", "translate", "transform", "resetTransform"];
       const images = ["drawImage"];
