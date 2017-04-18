@@ -76,6 +76,13 @@ See examples:
 
 * <a href="examples/circle-zoom.html">zoom</a>
 
+# Scripts
+
+Usefull Scripts, see:
+
+* <a href="scripts/">scripts</a>
+
+
 # API reference
 
 {{>main}}
