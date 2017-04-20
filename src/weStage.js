@@ -62,6 +62,7 @@ class WeStage {
   setSize(width, height) {
       this._canvas.setSize(width, height)
       this._offScreenCanvas.setSize(width, height)
+      this._offScreenCanvas.setScale(this._ratio)
     }
     /**
      * set stage style
