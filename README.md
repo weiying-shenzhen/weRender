@@ -130,6 +130,7 @@ WeCanvas: Easy canvas api for using, support useing chain
     * [.setSize(width, height)](#WeCanvas+setSize)
     * [.setStyle(width, height)](#WeCanvas+setStyle)
     * [.setCoordinate(x, y)](#WeCanvas+setCoordinate)
+    * [.setScale(scale)](#WeCanvas+setScale)
     * [.clear()](#WeCanvas+clear)
     * [.getActions()](#WeCanvas+getActions)
     * [.setActions(actions)](#WeCanvas+setActions)
@@ -181,6 +182,17 @@ set coordinate of stage
 | --- | --- | --- | --- |
 | x | <code>Number</code> | <code>0</code> | horizontal axis |
 | y | <code>Number</code> | <code>0</code> | vertical axis |
+
+<a name="WeCanvas+setScale"></a>
+
+### weCanvas.setScale(scale)
+set init scale
+
+**Kind**: instance method of <code>[WeCanvas](#WeCanvas)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| scale | <code>Number</code> | scale ratio |
 
 <a name="WeCanvas+clear"></a>
 

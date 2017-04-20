@@ -164,6 +164,14 @@ class WeCanvas {
       return this
     }
     /**
+     * set init scale
+     *
+     * @param {Number} scale - scale ratio
+     */
+  setScale(scale) {
+      this._ctx.scale(scale, scale)
+    }
+    /**
      * clear canvas
      */
   clear() {
