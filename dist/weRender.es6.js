@@ -168,6 +168,14 @@ class WeCanvas {
       return this
     }
     /**
+     * set init scale
+     *
+     * @param {Number} scale - scale ratio
+     */
+  setScale(scale) {
+      this._ctx.scale(scale, scale);
+    }
+    /**
      * clear canvas
      */
   clear() {
@@ -289,6 +297,7 @@ class WeStage {
   setSize(width, height) {
       this._canvas.setSize(width, height);
       this._offScreenCanvas.setSize(width, height);
+      this._offScreenCanvas.setScale(this._ratio);
     }
     /**
      * set stage style

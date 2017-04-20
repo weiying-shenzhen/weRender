@@ -215,6 +215,17 @@ var WeCanvas = function () {
       return this;
     }
     /**
+     * set init scale
+     *
+     * @param {Number} scale - scale ratio
+     */
+
+  }, {
+    key: "setScale",
+    value: function setScale(scale) {
+      this._ctx.scale(scale, scale);
+    }
+    /**
      * clear canvas
      */
 
@@ -296,11 +307,6 @@ var WeCanvas = function () {
   return WeCanvas;
 }();
 
-/**
- * WeStage: Canvas manager for WeCanvas
- *
- */
-
 var WeStage = function () {
   /**
    * create a WeStage instance
@@ -375,6 +381,7 @@ var WeStage = function () {
     value: function setSize(width, height) {
       this._canvas.setSize(width, height);
       this._offScreenCanvas.setSize(width, height);
+      this._offScreenCanvas.setScale(this._ratio);
     }
     /**
      * set stage style
