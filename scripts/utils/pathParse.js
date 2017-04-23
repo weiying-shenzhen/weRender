@@ -63,8 +63,21 @@ function svgPathToCommands(str) {
         .reverse()
         .map(function(command) {
             var values = command.chunk.match(digitRegEx);
-            return { marker: command.marker, values: values ? values.map(parseFloat) : []};
+            return { marker: command.marker, values: values ? values.map(formatNumber) : []};
         })
+}
+
+function formatNumber(str){
+  return ~~(0.5 + parseFloat(str))
+}
+
+function genMethod(){
+  var args = Array.prototype.slice.call(arguments)
+  var method = args[0]
+  var params = args.slice(1, args.length)
+  var prefix = "." + method
+  if (!params.length) return prefix + "()"
+  return prefix + "(" + params.join(',') + ")"
 }
 
 module.exports = function parse(svg){
@@ -79,7 +92,7 @@ module.exports = function parse(svg){
       codes.push("new WeCanvas({ width: "+ size.width + ", height: "+ size.height + " })")
     }
     var commandList = svgPathToCommands(info.path);
-    codes.push(".beginPath()")
+    codes.push(genMethod("beginPath"))
 
     for (var i = 0; i < commandList.length; i++) {
       var command = commandList[i]
@@ -87,53 +100,53 @@ module.exports = function parse(svg){
         case "z":
         case "Z":
           lastPos = [0, 0]
-          codes.push(".closePath()")
+          codes.push(genMethod("closePath"))
           break;
         case "m":
           lastPos = [lastPos[0] + command.values[0], lastPos[1] + command.values[1]]
-          codes.push(".moveTo(" + lastPos[0] + ", " + lastPos[1] + ")")
+          codes.push(genMethod("moveTo", lastPos[0], lastPos[1]))
           break;
         case 'l':
           lastPos = [lastPos[0] + command.values[0], lastPos[1] + command.values[1]]
-          codes.push(".lineTo(" + lastPos[0] + ", " + lastPos[1] + ")")
+          codes.push(genMethod("lineTo", lastPos[0], lastPos[1]))
           break;
         case 'h':
           lastPos = [lastPos[0] + command.values[0], lastPos[1]]
-          codes.push(".lineTo(" + lastPos[0] + "," + lastPos[1] + ")")
+          codes.push(genMethod("lineTo", lastPos[0], lastPos[1]))
         case 'v':
           lastPos = [lastPos[0], lastPos[1] + command.values[0]]
-          codes.push(".lineTo(" + lastPos[0] + "," + lastPos[1]+ ")")
+          codes.push(genMethod("lineTo", lastPos[0], lastPos[1]))
           break;
         case 'c':
           pointOne = [lastPos[0] + command.values[0], lastPos[1] + command.values[1]]
           pointTwo = [lastPos[0] + command.values[2], lastPos[1] + command.values[3]]
           lastPos = [lastPos[0] + command.values[4], lastPos[1] + command.values[5]]
-          codes.push(".bezierCurveTo(" + pointOne[0] + "," + pointOne[1] + "," + pointTwo[0] + "," + pointTwo[1] + "," + lastPos[0] + "," + lastPos[1]+ ")")
+          codes.push(genMethod("bezierCurveTo", pointOne[0], pointOne[1], pointTwo[0], pointTwo[1], lastPos[0], lastPos[1]))
           break;
         case 'M':
           lastPos = [command.values[0], command.values[1]]
-          codes.push(".moveTo(" + lastPos[0] + "," + lastPos[1] + ")")
+          codes.push(genMethod("moveTo", lastPos[0], lastPos[1]))
           break;
         case 'L':
-          lastPos = [command.values[0], lastPos[1]]
-          codes.push(".lineTo(" + lastPos[0] + "," + lastPos[1] + ")")
+          lastPos = [command.values[0], command.values[1]]
+          codes.push(genMethod("lineTo", lastPos[0], lastPos[1]))
           break;
         case 'H':
           lastPos = [command.values[0], lastPos[1]]
-          codes.push(".lineTo(" + lastPos[0] + "," + lastPos[1] + ")")
+          codes.push(genMethod("lineTo", lastPos[0], lastPos[1]))
           break;
         case 'V':
           lastPos = [lastPos[0], command.values[0]]
-          codes.push(".lineTo(" + lastPos[0] + "," + lastPos[1] +")")
+          codes.push(genMethod("lineTo", lastPos[0], lastPos[1]))
           break;
         case 'C':
           pointOne = [command.values[0], command.values[1]]
           pointTwo = [command.values[2], command.values[3]]
           lastPos = [command.values[4], command.values[5]]
-          codes.push(".bezierCurveTo(" + pointOne[0] + "," + pointOne[1] +"," + pointTwo[0] + ","  + pointTwo[1] + "," + lastPos[0]+ "," + lastPos[1] + ")")
+          codes.push(genMethod("bezierCurveTo", pointOne[0], pointOne[1], pointTwo[0], pointTwo[1], lastPos[0], lastPos[1]))
           break;
       }
     }
-    codes.push(".fill()")
+    codes.push(genMethod("fill"))
     return codes
 }
