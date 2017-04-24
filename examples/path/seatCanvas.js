@@ -19,6 +19,7 @@ function drawSeat(scale, fillStyle, type, image) {
       height: 56 * scale
     })
     .scale(scale, scale)
+    .translate(10, 10)
     .beginPath()
     .fillStyle(fillStyle)
     .moveTo(33,34)
