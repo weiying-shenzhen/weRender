@@ -1,7 +1,7 @@
 (function(){
     function help () {
 /*
-    Usage: svgPath [file] [dest]
+    Usage: path.js [file] [dest]
 
     file:           SVG file location
     dest:           JS file destination
