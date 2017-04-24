@@ -21,7 +21,7 @@ function getPath(tree){
         }
       } else {
         if (_json.tagName == "path") {
-          return _json.attributes.d
+          return _json.attributes
         }
       }
     }
@@ -81,18 +81,26 @@ function genMethod(){
 }
 
 module.exports = function parse(svg){
-    var codes = [];
-    var lastPos = [0, 0],
+    var codes = [],
+      lastPos = [0, 0],
       pointOne,
-      pointTwo;
+      pointTwo,
+      info = parseSvg(svg),
+      size = info.size,
+      path = info.path,
+      commandList = svgPathToCommands(path.d);
 
-    var info = parseSvg(svg);
-    var size = info.size;
     if (size) {
       codes.push("new WeCanvas({ width: "+ size.width + ", height: "+ size.height + " })")
     }
-    var commandList = svgPathToCommands(info.path);
+    if (path.transform) {
+      codes.push("." + path.transform)
+    }
     codes.push(genMethod("beginPath"))
+
+    if (path.fill) {
+      codes.push(genMethod("fillStyle", "'" + path.fill + "'"))
+    }
 
     for (var i = 0; i < commandList.length; i++) {
       var command = commandList[i]
