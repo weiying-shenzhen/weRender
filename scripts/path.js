@@ -8,7 +8,7 @@
 
     -h, --help:     displays this
 
-    if dest is not provided, svgPath prints to stdout
+    if dest is not provided, it prints to stdout
 */
   }
 
