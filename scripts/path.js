@@ -1,48 +1,46 @@
-var parse = require('./utils/pathParse');
-var fs = require('fs');
+(function(){
+    function help () {
+/*
+    Usage: svgPath [file] [dest]
 
-var filePath = {
-  input: "input.svg",
-  output: "out.js"
-};
+    file:           SVG file location
+    dest:           JS file destination
 
-function readArgs(){
-  var args = process.argv;
+    -h, --help:     displays this
 
-  args.forEach(function(val, index) {
-    switch (val){
-      case "-i":
-        var path = args[index + 1];
-        if (path) {
-          filePath["input"] = path;
-        }
-        break;
-      case "-o":
-        var path = args[index + 1];
-        if (path) {
-          filePath["output"] = path;
-        }
-        break;
-      default:
-        break;
-    }
-  })
-}
+    if dest is not provided, svgPath prints to stdout
+*/
+  }
 
-function run(){
-  readArgs();
-  var codes;
-  fs.readFile(filePath.input, 'utf8', function(err, data){
-    if (err) throw err;
-    codes = parse(data).join('\n');
+  var parse = require('./utils/pathParse')
+  var fs = require('fs')
+  var path = require('path')
 
-    fs.writeFile(filePath.output, codes, (err) => {
-      if (err) throw err;
+  var root = process.cwd()
+  var args = process.argv.slice(2)
+  if (!args.length) return
 
-      console.log('It\'s saved!');
-    });
+  var flag = args[0].toLowerCase()
 
-  });
-}
+  if (flag === '-h' || flag === '--help') {
+    var h = help.toString()
+    var msg = h.substring(h.indexOf('*') + 2, h.lastIndexOf('*'))
+    return console.log(msg)
+  }
 
-run();
+  var src = path.join(root, args[0])
+  var dest = args[1]
+    ? path.join(root, args[1])
+    : null
+
+  var text = fs.readFileSync(src, 'utf-8')
+  var data = parse(text).join('\n')
+
+  if (dest) {
+    fs.writeFileSync(dest, data)
+    console.log("It's saved!")
+  } else {
+    console.log(data)
+  }
+
+})()
