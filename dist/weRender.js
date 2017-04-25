@@ -70,6 +70,48 @@ var possibleConstructorReturn = function (self, call) {
   return call && (typeof call === "object" || typeof call === "function") ? call : self;
 };
 
+
+
+
+
+var slicedToArray = function () {
+  function sliceIterator(arr, i) {
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _e = undefined;
+
+    try {
+      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+        _arr.push(_s.value);
+
+        if (i && _arr.length === i) break;
+      }
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"]) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+
+    return _arr;
+  }
+
+  return function (arr, i) {
+    if (Array.isArray(arr)) {
+      return arr;
+    } else if (Symbol.iterator in Object(arr)) {
+      return sliceIterator(arr, i);
+    } else {
+      throw new TypeError("Invalid attempt to destructure non-iterable instance");
+    }
+  };
+}();
+
 var WeGraphic = function () {
   function WeGraphic() {
     classCallCheck(this, WeGraphic);
@@ -94,542 +136,223 @@ var WeGraphic = function () {
   }, {
     key: "clearRect",
     value: function clearRect() {
-      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      var method = "clearRect";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "clearRect", arguments]);
       return this;
     }
   }, {
     key: "fillRect",
     value: function fillRect() {
-      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        args[_key2] = arguments[_key2];
-      }
-
-      var method = "fillRect";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "fillRect", arguments]);
       return this;
     }
   }, {
     key: "strokeRect",
     value: function strokeRect() {
-      for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-        args[_key3] = arguments[_key3];
-      }
-
-      var method = "strokeRect";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "strokeRect", arguments]);
       return this;
     }
   }, {
     key: "fillText",
     value: function fillText() {
-      for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
-        args[_key4] = arguments[_key4];
-      }
-
-      var method = "fillText";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "fillText", arguments]);
       return this;
     }
   }, {
     key: "strokeText",
     value: function strokeText() {
-      for (var _len5 = arguments.length, args = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
-        args[_key5] = arguments[_key5];
-      }
-
-      var method = "strokeText";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "strokeText", arguments]);
       return this;
     }
   }, {
     key: "measureText",
     value: function measureText() {
-      for (var _len6 = arguments.length, args = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
-        args[_key6] = arguments[_key6];
-      }
-
-      var method = "measureText";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "measureText", arguments]);
       return this;
     }
   }, {
     key: "lineWidth",
-    value: function lineWidth(args) {
-      var method = "lineWidth";
-      this._actions.push({
-        type: "property",
-        method: method,
-        args: args
-      });
+    value: function lineWidth() {
+      this._actions.push(["property", "lineWidth", arguments]);
       return this;
     }
   }, {
     key: "lineCap",
-    value: function lineCap(args) {
-      var method = "lineCap";
-      this._actions.push({
-        type: "property",
-        method: method,
-        args: args
-      });
+    value: function lineCap() {
+      this._actions.push(["property", "lineCap", arguments]);
       return this;
     }
   }, {
     key: "lineJoin",
-    value: function lineJoin(args) {
-      var method = "lineJoin";
-      this._actions.push({
-        type: "property",
-        method: method,
-        args: args
-      });
+    value: function lineJoin() {
+      this._actions.push(["property", "lineJoin", arguments]);
       return this;
     }
   }, {
     key: "font",
-    value: function font(args) {
-      var method = "font";
-      this._actions.push({
-        type: "property",
-        method: method,
-        args: args
-      });
-      return this;
-    }
-  }, {
-    key: "textAlgin",
-    value: function textAlgin(args) {
-      var method = "textAlgin";
-      this._actions.push({
-        type: "property",
-        method: method,
-        args: args
-      });
+    value: function font() {
+      this._actions.push(["property", "font", arguments]);
       return this;
     }
   }, {
     key: "textBaseline",
-    value: function textBaseline(args) {
-      var method = "textBaseline";
-      this._actions.push({
-        type: "property",
-        method: method,
-        args: args
-      });
-      return this;
-    }
-  }, {
-    key: "direction",
-    value: function direction(args) {
-      var method = "direction";
-      this._actions.push({
-        type: "property",
-        method: method,
-        args: args
-      });
+    value: function textBaseline() {
+      this._actions.push(["property", "textBaseline", arguments]);
       return this;
     }
   }, {
     key: "fillStyle",
-    value: function fillStyle(args) {
-      var method = "fillStyle";
-      this._actions.push({
-        type: "property",
-        method: method,
-        args: args
-      });
+    value: function fillStyle() {
+      this._actions.push(["property", "fillStyle", arguments]);
       return this;
     }
   }, {
     key: "strokeStyle",
-    value: function strokeStyle(args) {
-      var method = "strokeStyle";
-      this._actions.push({
-        type: "property",
-        method: method,
-        args: args
-      });
+    value: function strokeStyle() {
+      this._actions.push(["property", "strokeStyle", arguments]);
       return this;
     }
   }, {
     key: "beginPath",
     value: function beginPath() {
-      for (var _len7 = arguments.length, args = Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {
-        args[_key7] = arguments[_key7];
-      }
-
-      var method = "beginPath";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "beginPath", arguments]);
       return this;
     }
   }, {
     key: "closePath",
     value: function closePath() {
-      for (var _len8 = arguments.length, args = Array(_len8), _key8 = 0; _key8 < _len8; _key8++) {
-        args[_key8] = arguments[_key8];
-      }
-
-      var method = "closePath";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "closePath", arguments]);
       return this;
     }
   }, {
     key: "moveTo",
     value: function moveTo() {
-      for (var _len9 = arguments.length, args = Array(_len9), _key9 = 0; _key9 < _len9; _key9++) {
-        args[_key9] = arguments[_key9];
-      }
-
-      var method = "moveTo";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "moveTo", arguments]);
       return this;
     }
   }, {
     key: "lineTo",
     value: function lineTo() {
-      for (var _len10 = arguments.length, args = Array(_len10), _key10 = 0; _key10 < _len10; _key10++) {
-        args[_key10] = arguments[_key10];
-      }
-
-      var method = "lineTo";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "lineTo", arguments]);
       return this;
     }
   }, {
     key: "bezierCurveTo",
     value: function bezierCurveTo() {
-      for (var _len11 = arguments.length, args = Array(_len11), _key11 = 0; _key11 < _len11; _key11++) {
-        args[_key11] = arguments[_key11];
-      }
-
-      var method = "bezierCurveTo";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "bezierCurveTo", arguments]);
       return this;
     }
   }, {
     key: "quadraticCurveTo",
     value: function quadraticCurveTo() {
-      for (var _len12 = arguments.length, args = Array(_len12), _key12 = 0; _key12 < _len12; _key12++) {
-        args[_key12] = arguments[_key12];
-      }
-
-      var method = "quadraticCurveTo";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "quadraticCurveTo", arguments]);
       return this;
     }
   }, {
     key: "arc",
     value: function arc() {
-      for (var _len13 = arguments.length, args = Array(_len13), _key13 = 0; _key13 < _len13; _key13++) {
-        args[_key13] = arguments[_key13];
-      }
-
-      var method = "arc";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "arc", arguments]);
       return this;
     }
   }, {
     key: "arcTo",
     value: function arcTo() {
-      for (var _len14 = arguments.length, args = Array(_len14), _key14 = 0; _key14 < _len14; _key14++) {
-        args[_key14] = arguments[_key14];
-      }
-
-      var method = "arcTo";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "arcTo", arguments]);
       return this;
     }
   }, {
     key: "rect",
     value: function rect() {
-      for (var _len15 = arguments.length, args = Array(_len15), _key15 = 0; _key15 < _len15; _key15++) {
-        args[_key15] = arguments[_key15];
-      }
-
-      var method = "rect";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "rect", arguments]);
       return this;
     }
   }, {
     key: "fill",
     value: function fill() {
-      for (var _len16 = arguments.length, args = Array(_len16), _key16 = 0; _key16 < _len16; _key16++) {
-        args[_key16] = arguments[_key16];
-      }
-
-      var method = "fill";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "fill", arguments]);
       return this;
     }
   }, {
     key: "stroke",
     value: function stroke() {
-      for (var _len17 = arguments.length, args = Array(_len17), _key17 = 0; _key17 < _len17; _key17++) {
-        args[_key17] = arguments[_key17];
-      }
-
-      var method = "stroke";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "stroke", arguments]);
       return this;
     }
   }, {
     key: "rotate",
     value: function rotate() {
-      for (var _len18 = arguments.length, args = Array(_len18), _key18 = 0; _key18 < _len18; _key18++) {
-        args[_key18] = arguments[_key18];
-      }
-
-      var method = "rotate";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "rotate", arguments]);
       return this;
     }
   }, {
     key: "scale",
     value: function scale() {
-      for (var _len19 = arguments.length, args = Array(_len19), _key19 = 0; _key19 < _len19; _key19++) {
-        args[_key19] = arguments[_key19];
-      }
-
-      var method = "scale";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "scale", arguments]);
       return this;
     }
   }, {
     key: "translate",
     value: function translate() {
-      for (var _len20 = arguments.length, args = Array(_len20), _key20 = 0; _key20 < _len20; _key20++) {
-        args[_key20] = arguments[_key20];
-      }
-
-      var method = "translate";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "translate", arguments]);
       return this;
     }
   }, {
     key: "transform",
     value: function transform() {
-      for (var _len21 = arguments.length, args = Array(_len21), _key21 = 0; _key21 < _len21; _key21++) {
-        args[_key21] = arguments[_key21];
-      }
-
-      var method = "transform";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "transform", arguments]);
       return this;
     }
   }, {
     key: "resetTransform",
     value: function resetTransform() {
-      for (var _len22 = arguments.length, args = Array(_len22), _key22 = 0; _key22 < _len22; _key22++) {
-        args[_key22] = arguments[_key22];
-      }
-
-      var method = "resetTransform";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "resetTransform", arguments]);
       return this;
     }
   }, {
     key: "drawImage",
     value: function drawImage() {
-      for (var _len23 = arguments.length, args = Array(_len23), _key23 = 0; _key23 < _len23; _key23++) {
-        args[_key23] = arguments[_key23];
-      }
-
-      var method = "drawImage";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "drawImage", arguments]);
       return this;
     }
   }, {
     key: "createImageData",
     value: function createImageData() {
-      for (var _len24 = arguments.length, args = Array(_len24), _key24 = 0; _key24 < _len24; _key24++) {
-        args[_key24] = arguments[_key24];
-      }
-
-      var method = "createImageData";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "createImageData", arguments]);
       return this;
     }
   }, {
     key: "getImageData",
     value: function getImageData() {
-      for (var _len25 = arguments.length, args = Array(_len25), _key25 = 0; _key25 < _len25; _key25++) {
-        args[_key25] = arguments[_key25];
-      }
-
-      var method = "getImageData";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "getImageData", arguments]);
       return this;
     }
   }, {
     key: "putImageData",
     value: function putImageData() {
-      for (var _len26 = arguments.length, args = Array(_len26), _key26 = 0; _key26 < _len26; _key26++) {
-        args[_key26] = arguments[_key26];
-      }
-
-      var method = "putImageData";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "putImageData", arguments]);
       return this;
     }
   }, {
     key: "save",
     value: function save() {
-      for (var _len27 = arguments.length, args = Array(_len27), _key27 = 0; _key27 < _len27; _key27++) {
-        args[_key27] = arguments[_key27];
-      }
-
-      var method = "save";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "save", arguments]);
       return this;
     }
   }, {
     key: "restore",
     value: function restore() {
-      for (var _len28 = arguments.length, args = Array(_len28), _key28 = 0; _key28 < _len28; _key28++) {
-        args[_key28] = arguments[_key28];
-      }
-
-      var method = "restore";
-      this._actions.push({
-        type: "method",
-        method: method,
-        args: args
-      });
+      this._actions.push(["method", "restore", arguments]);
       return this;
     }
   }, {
     key: "shadowColor",
-    value: function shadowColor(args) {
-      var method = "shadowColor";
-      this._actions.push({
-        type: "property",
-        method: method,
-        args: args
-      });
+    value: function shadowColor() {
+      this._actions.push(["property", "shadowColor", arguments]);
       return this;
     }
   }, {
     key: "shadowBlur",
-    value: function shadowBlur(args) {
-      var method = "shadowBlur";
-      this._actions.push({
-        type: "property",
-        method: method,
-        args: args
-      });
+    value: function shadowBlur() {
+      this._actions.push(["property", "shadowBlur", arguments]);
       return this;
     }
   }]);
@@ -665,42 +388,20 @@ var WeCanvas = function (_WeGraphic) {
     return _this;
   }
   /**
-   * reduce context methods that need to be bind
+   * init
    *
    * @private
-   * @param  {Array}  methods - context methods
+   * @param  {Canvas} options.canvas  - canvas element
+   * @param  {Array}  options.actions - context drawing actions
+   * @param  {Number} options.width   - canvas witdh
+   * @param  {Number} options.height  - canvas height
+   * @param  {Number} options.x       - horizontal axis
+   * @param  {Number} options.y       - vertical axis
+   * @param  {Array}  options.methods - methods for context
    */
 
 
   createClass(WeCanvas, [{
-    key: '_initMethods',
-    value: function _initMethods() {
-      var _this2 = this;
-
-      var methods = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-
-      methods.reduce(function (hash, method) {
-        if (!_this2[method]) {
-          _this2._proxy(method);
-          hash[method] = true;
-        }
-        return hash;
-      }, {});
-    }
-    /**
-     * init
-     *
-     * @private
-     * @param  {Canvas} options.canvas  - canvas element
-     * @param  {Array}  options.actions - context drawing actions
-     * @param  {Number} options.width   - canvas witdh
-     * @param  {Number} options.height  - canvas height
-     * @param  {Number} options.x       - horizontal axis
-     * @param  {Number} options.y       - vertical axis
-     * @param  {Array}  options.methods - methods for context
-     */
-
-  }, {
     key: '_init',
     value: function _init() {
       var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
@@ -720,6 +421,28 @@ var WeCanvas = function (_WeGraphic) {
       this.setActions(actions);
     }
     /**
+     * reduce context methods that need to be bind
+     *
+     * @private
+     * @param  {Array}  methods - context methods
+     */
+
+  }, {
+    key: '_initMethods',
+    value: function _initMethods() {
+      var _this2 = this;
+
+      var methods = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+      methods.reduce(function (hash, method) {
+        if (!_this2[method]) {
+          _this2._proxy(method);
+          hash[method] = true;
+        }
+        return hash;
+      }, {});
+    }
+    /**
      * bind context method or property to this instance
      *
      * @private
@@ -732,33 +455,15 @@ var WeCanvas = function (_WeGraphic) {
       var _this3 = this;
 
       var prop = this._ctx[method];
-      var func = null;
-      if (prop !== 'undefined') {
-        if (Object.prototype.toString.call(prop) === "[object Function]") {
-          func = function func() {
-            for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-              args[_key] = arguments[_key];
-            }
-
-            _this3._actions.push({
-              type: "method",
-              method: method,
-              args: args
-            });
-            return _this3;
-          };
-        } else {
-          func = function func(args) {
-            _this3._actions.push({
-              type: "property",
-              method: method,
-              args: args
-            });
-            return _this3;
-          };
+      if (prop === undefined) return;
+      this[method] = function () {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
         }
-        this[method] = func;
-      }
+
+        _this3._actions.push([Object.prototype.toString.call(prop) === "[object Function]" ? "method" : "property", method, args]);
+        return _this3;
+      };
     }
     /**
      * set canvas size
@@ -849,14 +554,17 @@ var WeCanvas = function (_WeGraphic) {
       if (!shouldRender) return;
 
       this._actions.forEach(function (_ref2) {
-        var type = _ref2.type,
-            method = _ref2.method,
-            args = _ref2.args;
+        var _ref3 = slicedToArray(_ref2, 3),
+            type = _ref3[0],
+            method = _ref3[1],
+            args = _ref3[2];
+
+        var params = Array.prototype.slice.call(args);
 
         if (type === "method") {
-          _this4._ctx[method].apply(_this4._ctx, args);
+          _this4._ctx[method].apply(_this4._ctx, params);
         } else {
-          _this4._ctx[method] = args;
+          _this4._ctx[method] = params[0];
         }
       });
       if (!this._rendered) {
