@@ -21,21 +21,6 @@ class WeCanvas extends WeGraphic {
       this.height = this.canvas.height
     }
     /**
-     * reduce context methods that need to be bind
-     *
-     * @private
-     * @param  {Array}  methods - context methods
-     */
-  _initMethods(methods = []) {
-      methods.reduce((hash, method) => {
-        if (!this[method]) {
-          this._proxy(method)
-          hash[method] = true
-        }
-        return hash
-      }, {})
-    }
-    /**
      * init
      *
      * @private
@@ -64,35 +49,36 @@ class WeCanvas extends WeGraphic {
       this.setActions(actions)
     }
     /**
+     * reduce context methods that need to be bind
+     *
+     * @private
+     * @param  {Array}  methods - context methods
+     */
+  _initMethods(methods = []) {
+      methods.reduce((hash, method) => {
+        if (!this[method]) {
+          this._proxy(method)
+          hash[method] = true
+        }
+        return hash
+      }, {})
+    }
+    /**
      * bind context method or property to this instance
      *
      * @private
      * @param  {String} method - context method or property
      */
   _proxy(method) {
-      let prop = this._ctx[method]
-      let func = null
-      if (prop !== 'undefined') {
-        if (Object.prototype.toString.call(prop) === "[object Function]") {
-          func = (...args) => {
-            this._actions.push({
-              type: "method",
-              method,
-              args
-            })
-            return this
-          }
-        } else {
-          func = (args) => {
-            this._actions.push({
-              type: "property",
-              method,
-              args
-            })
-            return this
-          }
-        }
-        this[method] = func
+      const prop = this._ctx[method]
+      if (prop === undefined) return
+      this[method] = (...args) => {
+        this._actions.push([
+          Object.prototype.toString.call(prop) === "[object Function]" ? "method" : "property",
+          method,
+          args
+        ])
+        return this
       }
     }
     /**
@@ -160,15 +146,17 @@ class WeCanvas extends WeGraphic {
       const shouldRender = ((!this._rendered ? true : !this._cache) && !!this._actions.length)
       if (!shouldRender) return
 
-      this._actions.forEach(({
+      this._actions.forEach(([
         type,
         method,
         args
-      }) => {
+      ]) => {
+        const params = Array.prototype.slice.call(args)
+
         if (type === "method") {
-          this._ctx[method].apply(this._ctx, args)
+          this._ctx[method].apply(this._ctx, params)
         } else {
-          this._ctx[method] = args
+          this._ctx[method] = params[0]
         }
       })
       if (!this._rendered) {
