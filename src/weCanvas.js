@@ -1,3 +1,4 @@
+import WeGraphic from './weGraphic'
 /**
  * WeCanvas: Easy canvas api for using, support useing chain
  *
@@ -6,13 +7,14 @@
  * - Won't really drawing Canvas until run `draw()`
  *
  */
-class WeCanvas {
+class WeCanvas extends WeGraphic {
   /**
    * create a WeCanvas instance
    *
    * @param  {Object} options - option settions for instance
    */
   constructor(options) {
+      super()
       this._rendered = false
       this._init(options)
       this.width = this.canvas.width
@@ -25,35 +27,8 @@ class WeCanvas {
      * @param  {Array}  methods - context methods
      */
   _initMethods(methods = []) {
-      const retangles = ["clearRect", "fillRect", "strokeRect"]
-      const text = ["fillText", "strokeText", "measureText"]
-      const lineStyles = ["lineWidth", "lineCap", "lineJoin"]
-      const textStyles = ["font", "textAlgin", "textBaseline", "direction"]
-      const fillStrokeStyles = ["fillStyle", "strokeStyle"]
-      const paths = ["beginPath", "closePath", "moveTo", "lineTo", "bezierCurveTo", "quadraticCurveTo", "arc", "arcTo", "rect"]
-      const pathsDrawing = ["fill", "stroke"]
-      const transformations = ["rotate", "scale", "translate", "transform", "resetTransform"]
-      const images = ["drawImage"]
-      const pixel = ["createImageData", "getImageData", "putImageData"]
-      const state = ["save", "restore"]
-      const shadow = ['shadowColor', 'shadowBlur']
-      const _methods = [].concat(
-        retangles,
-        text,
-        lineStyles,
-        textStyles,
-        fillStrokeStyles,
-        paths,
-        pathsDrawing,
-        transformations,
-        images,
-        pixel,
-        state,
-        shadow,
-        methods
-      )
-      _methods.reduce((hash, method) => {
-        if (!hash[method]) {
+      methods.reduce((hash, method) => {
+        if (!this[method]) {
           this._proxy(method)
           hash[method] = true
         }
@@ -101,7 +76,7 @@ class WeCanvas {
         if (Object.prototype.toString.call(prop) === "[object Function]") {
           func = (...args) => {
             this._actions.push({
-              type: "function",
+              type: "method",
               method,
               args
             })
@@ -110,7 +85,7 @@ class WeCanvas {
         } else {
           func = (args) => {
             this._actions.push({
-              type: "value",
+              type: "property",
               method,
               args
             })
@@ -179,22 +154,6 @@ class WeCanvas {
       this.setActions([])
     }
     /**
-     * get actions for context drawing
-     */
-  getActions() {
-      return this._actions
-    }
-    /**
-     * set actions
-     *
-     * @param {Array} actions - actions for context drawing
-     */
-  setActions(actions = []) {
-      if (Array.isArray(actions)) {
-        this._actions = actions
-      }
-    }
-    /**
      * run actions, draw canvas
      */
   draw() {
@@ -206,7 +165,7 @@ class WeCanvas {
         method,
         args
       }) => {
-        if (type === "function") {
+        if (type === "method") {
           this._ctx[method].apply(this._ctx, args)
         } else {
           this._ctx[method] = args
