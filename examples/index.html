@@ -35,12 +35,12 @@
 
   function replaceActions(actions, method, args){
     return actions.reduce(function(acc, action){
-      if (action.method == method) {
-        acc.push({
-          type: action.type,
-          method: method,
-          args: args
-        });
+      if (action[1] == method) {
+        acc.push([
+          action[0],
+          method,
+          [args]
+        ]);
       } else {
         acc.push(action);
       }
