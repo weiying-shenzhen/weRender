@@ -22,21 +22,6 @@
 <script type="text/javascript" src="../lib/weScroll.min.js"></script>
 <script type="text/javascript">
 
-  function replaceActions(actions, method, args){
-    return actions.reduce(function(acc, action){
-      if (action.method == method) {
-        acc.push({
-          type: action.type,
-          method: method,
-          args: args
-        });
-      } else {
-        acc.push(action);
-      }
-      return acc;
-    }, [])
-  }
-
   var WeStage = weRender.WeStage;
   var WeCanvas = weRender.WeCanvas;
 
