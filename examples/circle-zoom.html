@@ -16,24 +16,24 @@
 <body>
 <div id="container">
   <canvas id="canvas"></canvas>
-  <p style="text-align: center">touch this on mobile.</p>
 </div>
 <script type="text/javascript" src="./lib/weRender.min.js"></script>
-<script type="text/javascript" src="../lib/weScroll.min.js"></script>
+<script type="text/javascript" src="./lib/weScroll.min.js"></script>
 <script type="text/javascript">
 
   var WeStage = weRender.WeStage;
   var WeCanvas = weRender.WeCanvas;
 
   var stageEl = document.querySelector("#canvas");
+  var wrapper = stageEl.parentNode;
   var ratio = window.devicePixelRatio || 1;
   var stage = new WeStage(stageEl, {
     ratio: ratio
   });
-  var canvasWidth = window.screen.width;
-  var canvasHeight = 500;
+  var canvasWidth = wrapper.clientWidth;
+  var canvasHeight = wrapper.clientHeight;
 
-  stage.setSize(canvasWidth, canvasHeight);
+  stage.setSize(canvasWidth * ratio, canvasHeight * ratio);
   stage.setStyle(canvasWidth + "px", canvasHeight + "px");
 
   var zoomed = false;
@@ -49,7 +49,7 @@
     var pointY = pageY + top - scroller.y;
     var scale = scroller.scale;
     positionX = pointX / scale;
-    positionY = pointY / scale
+    positionY = pointY / scale;
 
     if (zoomed) return
 
@@ -130,20 +130,24 @@
 
     stage.update();
   }
-
-  var scroller = new WeScroll("#container", {
+  var zoomMin = canvasWidth / contentWidth;
+  var scroller = new WeScroll(wrapper, {
     tap: true,
     disablePointer: true,
     disableTouch: false,
     disableMouse: false,
     zoom: true,
-    zoomMin: 0.8,
+    zoomMin: zoomMin,
+    startZoom: zoomMin,
     zoomMax: 2,
     contentWidth: contentWidth,
-    contentHeight: contentHeight + 60,
+    contentHeight: contentHeight,
     render: render,
   });
 
+  setTimeout(function(){
+    scroller.zoom(0.8)
+  }, 300)
 </script>
 </body>
 </html>
