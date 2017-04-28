@@ -7,14 +7,13 @@ import WeGraphic from './weGraphic'
  * - Won't really drawing Canvas until run `draw()`
  *
  */
-class WeCanvas extends WeGraphic {
+class WeCanvas {
   /**
    * create a WeCanvas instance
    *
    * @param  {Object} options - option settions for instance
    */
   constructor(options) {
-      super()
       this._rendered = false
       this._init(options)
       this.width = this.canvas.width
@@ -43,7 +42,7 @@ class WeCanvas extends WeGraphic {
     } = {}) {
       this.canvas = canvas || document.createElement('canvas')
       this._ctx = this.canvas.getContext('2d')
-      this._initMethods(methods)
+      this._initMethods(WeCanvas.hasGeneratored ? methods : WeCanvas.generatorMethod().concat(methods))
       this.setSize(width, height)
       this.setCoordinate(x, y)
       this.setActions(actions)
@@ -72,7 +71,7 @@ class WeCanvas extends WeGraphic {
   _proxy(method) {
       const prop = this._ctx[method]
       if (prop === undefined) return
-      this[method] = (...args) => {
+      WeCanvas.prototype[method] = function(...args) {
         this._actions.push([
           Object.prototype.toString.call(prop) === "[object Function]" ? "method" : "property",
           method,
@@ -140,6 +139,22 @@ class WeCanvas extends WeGraphic {
       this.setActions([])
     }
     /**
+     * get actions for context drawing
+     */
+  getActions() {
+      return this._actions
+    }
+    /**
+     * set actions
+     *
+     * @param {Array} actions - actions for context drawing
+     */
+  setActions(actions = []) {
+      if (Array.isArray(actions)) {
+        this._actions = actions
+      }
+    }
+    /**
      * run actions, draw canvas
      */
   draw() {
@@ -175,6 +190,38 @@ class WeCanvas extends WeGraphic {
     }
     return this
   }
+}
+WeCanvas.hasGeneratored = false
+WeCanvas.generatorMethod = function() {
+  WeCanvas.hasGeneratored = true
+
+  const retangles = ["clearRect", "fillRect", "strokeRect"]
+  const text = ["fillText", "strokeText", "measureText"]
+  const lineStyles = ["lineWidth", "lineCap", "lineJoin"]
+  const textStyles = ["font", "textAlgin", "textBaseline", "direction"]
+  const fillStrokeStyles = ["fillStyle", "strokeStyle"]
+  const paths = ["beginPath", "closePath", "moveTo", "lineTo", "bezierCurveTo", "quadraticCurveTo", "arc", "arcTo", "rect"]
+  const pathsDrawing = ["fill", "stroke"]
+  const transformations = ["rotate", "scale", "translate", "transform", "resetTransform"]
+  const images = ["drawImage"]
+  const pixel = ["createImageData", "getImageData", "putImageData"]
+  const state = ["save", "restore"]
+  const shadow = ['shadowColor', 'shadowBlur']
+  const _methods = [].concat(
+    retangles,
+    text,
+    lineStyles,
+    textStyles,
+    fillStrokeStyles,
+    paths,
+    pathsDrawing,
+    transformations,
+    images,
+    pixel,
+    state,
+    shadow,
+  )
+  return _methods
 }
 
 export default WeCanvas
