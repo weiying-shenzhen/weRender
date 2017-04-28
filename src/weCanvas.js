@@ -1,4 +1,3 @@
-import WeGraphic from './weGraphic'
 /**
  * WeCanvas: Easy canvas api for using, support useing chain
  *
