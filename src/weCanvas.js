@@ -8,6 +8,38 @@ import WeGraphic from './weGraphic'
  *
  */
 class WeCanvas {
+  static hasGeneratored = false
+  static generatorMethod() {
+    WeCanvas.hasGeneratored = true
+
+    const retangles = ["clearRect", "fillRect", "strokeRect"]
+    const text = ["fillText", "strokeText", "measureText"]
+    const lineStyles = ["lineWidth", "lineCap", "lineJoin"]
+    const textStyles = ["font", "textAlgin", "textBaseline", "direction"]
+    const fillStrokeStyles = ["fillStyle", "strokeStyle"]
+    const paths = ["beginPath", "closePath", "moveTo", "lineTo", "bezierCurveTo", "quadraticCurveTo", "arc", "arcTo", "rect"]
+    const pathsDrawing = ["fill", "stroke"]
+    const transformations = ["rotate", "scale", "translate", "transform", "resetTransform"]
+    const images = ["drawImage"]
+    const pixel = ["createImageData", "getImageData", "putImageData"]
+    const state = ["save", "restore"]
+    const shadow = ['shadowColor', 'shadowBlur']
+    const _methods = [].concat(
+      retangles,
+      text,
+      lineStyles,
+      textStyles,
+      fillStrokeStyles,
+      paths,
+      pathsDrawing,
+      transformations,
+      images,
+      pixel,
+      state,
+      shadow,
+    )
+    return _methods
+  }
   /**
    * create a WeCanvas instance
    *
@@ -190,38 +222,6 @@ class WeCanvas {
     }
     return this
   }
-}
-WeCanvas.hasGeneratored = false
-WeCanvas.generatorMethod = function() {
-  WeCanvas.hasGeneratored = true
-
-  const retangles = ["clearRect", "fillRect", "strokeRect"]
-  const text = ["fillText", "strokeText", "measureText"]
-  const lineStyles = ["lineWidth", "lineCap", "lineJoin"]
-  const textStyles = ["font", "textAlgin", "textBaseline", "direction"]
-  const fillStrokeStyles = ["fillStyle", "strokeStyle"]
-  const paths = ["beginPath", "closePath", "moveTo", "lineTo", "bezierCurveTo", "quadraticCurveTo", "arc", "arcTo", "rect"]
-  const pathsDrawing = ["fill", "stroke"]
-  const transformations = ["rotate", "scale", "translate", "transform", "resetTransform"]
-  const images = ["drawImage"]
-  const pixel = ["createImageData", "getImageData", "putImageData"]
-  const state = ["save", "restore"]
-  const shadow = ['shadowColor', 'shadowBlur']
-  const _methods = [].concat(
-    retangles,
-    text,
-    lineStyles,
-    textStyles,
-    fillStrokeStyles,
-    paths,
-    pathsDrawing,
-    transformations,
-    images,
-    pixel,
-    state,
-    shadow,
-  )
-  return _methods
 }
 
 export default WeCanvas
