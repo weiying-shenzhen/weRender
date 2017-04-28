@@ -36,21 +36,6 @@ var createClass = function () {
 
 
 
-var inherits = function (subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      enumerable: false,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-};
 
 
 
@@ -62,13 +47,8 @@ var inherits = function (subClass, superClass) {
 
 
 
-var possibleConstructorReturn = function (self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
 
-  return call && (typeof call === "object" || typeof call === "function") ? call : self;
-};
+
 
 
 
@@ -112,253 +92,6 @@ var slicedToArray = function () {
   };
 }();
 
-var WeGraphic = function () {
-  function WeGraphic() {
-    classCallCheck(this, WeGraphic);
-
-    this._actions = [];
-  }
-
-  createClass(WeGraphic, [{
-    key: "getActions",
-    value: function getActions() {
-      return this._actions;
-    }
-  }, {
-    key: "setActions",
-    value: function setActions() {
-      var actions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-
-      if (Array.isArray(actions)) {
-        this._actions = actions;
-      }
-    }
-  }, {
-    key: "clearRect",
-    value: function clearRect() {
-      this._actions.push(["method", "clearRect", arguments]);
-      return this;
-    }
-  }, {
-    key: "fillRect",
-    value: function fillRect() {
-      this._actions.push(["method", "fillRect", arguments]);
-      return this;
-    }
-  }, {
-    key: "strokeRect",
-    value: function strokeRect() {
-      this._actions.push(["method", "strokeRect", arguments]);
-      return this;
-    }
-  }, {
-    key: "fillText",
-    value: function fillText() {
-      this._actions.push(["method", "fillText", arguments]);
-      return this;
-    }
-  }, {
-    key: "strokeText",
-    value: function strokeText() {
-      this._actions.push(["method", "strokeText", arguments]);
-      return this;
-    }
-  }, {
-    key: "measureText",
-    value: function measureText() {
-      this._actions.push(["method", "measureText", arguments]);
-      return this;
-    }
-  }, {
-    key: "lineWidth",
-    value: function lineWidth() {
-      this._actions.push(["property", "lineWidth", arguments]);
-      return this;
-    }
-  }, {
-    key: "lineCap",
-    value: function lineCap() {
-      this._actions.push(["property", "lineCap", arguments]);
-      return this;
-    }
-  }, {
-    key: "lineJoin",
-    value: function lineJoin() {
-      this._actions.push(["property", "lineJoin", arguments]);
-      return this;
-    }
-  }, {
-    key: "font",
-    value: function font() {
-      this._actions.push(["property", "font", arguments]);
-      return this;
-    }
-  }, {
-    key: "textBaseline",
-    value: function textBaseline() {
-      this._actions.push(["property", "textBaseline", arguments]);
-      return this;
-    }
-  }, {
-    key: "fillStyle",
-    value: function fillStyle() {
-      this._actions.push(["property", "fillStyle", arguments]);
-      return this;
-    }
-  }, {
-    key: "strokeStyle",
-    value: function strokeStyle() {
-      this._actions.push(["property", "strokeStyle", arguments]);
-      return this;
-    }
-  }, {
-    key: "beginPath",
-    value: function beginPath() {
-      this._actions.push(["method", "beginPath", arguments]);
-      return this;
-    }
-  }, {
-    key: "closePath",
-    value: function closePath() {
-      this._actions.push(["method", "closePath", arguments]);
-      return this;
-    }
-  }, {
-    key: "moveTo",
-    value: function moveTo() {
-      this._actions.push(["method", "moveTo", arguments]);
-      return this;
-    }
-  }, {
-    key: "lineTo",
-    value: function lineTo() {
-      this._actions.push(["method", "lineTo", arguments]);
-      return this;
-    }
-  }, {
-    key: "bezierCurveTo",
-    value: function bezierCurveTo() {
-      this._actions.push(["method", "bezierCurveTo", arguments]);
-      return this;
-    }
-  }, {
-    key: "quadraticCurveTo",
-    value: function quadraticCurveTo() {
-      this._actions.push(["method", "quadraticCurveTo", arguments]);
-      return this;
-    }
-  }, {
-    key: "arc",
-    value: function arc() {
-      this._actions.push(["method", "arc", arguments]);
-      return this;
-    }
-  }, {
-    key: "arcTo",
-    value: function arcTo() {
-      this._actions.push(["method", "arcTo", arguments]);
-      return this;
-    }
-  }, {
-    key: "rect",
-    value: function rect() {
-      this._actions.push(["method", "rect", arguments]);
-      return this;
-    }
-  }, {
-    key: "fill",
-    value: function fill() {
-      this._actions.push(["method", "fill", arguments]);
-      return this;
-    }
-  }, {
-    key: "stroke",
-    value: function stroke() {
-      this._actions.push(["method", "stroke", arguments]);
-      return this;
-    }
-  }, {
-    key: "rotate",
-    value: function rotate() {
-      this._actions.push(["method", "rotate", arguments]);
-      return this;
-    }
-  }, {
-    key: "scale",
-    value: function scale() {
-      this._actions.push(["method", "scale", arguments]);
-      return this;
-    }
-  }, {
-    key: "translate",
-    value: function translate() {
-      this._actions.push(["method", "translate", arguments]);
-      return this;
-    }
-  }, {
-    key: "transform",
-    value: function transform() {
-      this._actions.push(["method", "transform", arguments]);
-      return this;
-    }
-  }, {
-    key: "resetTransform",
-    value: function resetTransform() {
-      this._actions.push(["method", "resetTransform", arguments]);
-      return this;
-    }
-  }, {
-    key: "drawImage",
-    value: function drawImage() {
-      this._actions.push(["method", "drawImage", arguments]);
-      return this;
-    }
-  }, {
-    key: "createImageData",
-    value: function createImageData() {
-      this._actions.push(["method", "createImageData", arguments]);
-      return this;
-    }
-  }, {
-    key: "getImageData",
-    value: function getImageData() {
-      this._actions.push(["method", "getImageData", arguments]);
-      return this;
-    }
-  }, {
-    key: "putImageData",
-    value: function putImageData() {
-      this._actions.push(["method", "putImageData", arguments]);
-      return this;
-    }
-  }, {
-    key: "save",
-    value: function save() {
-      this._actions.push(["method", "save", arguments]);
-      return this;
-    }
-  }, {
-    key: "restore",
-    value: function restore() {
-      this._actions.push(["method", "restore", arguments]);
-      return this;
-    }
-  }, {
-    key: "shadowColor",
-    value: function shadowColor() {
-      this._actions.push(["property", "shadowColor", arguments]);
-      return this;
-    }
-  }, {
-    key: "shadowBlur",
-    value: function shadowBlur() {
-      this._actions.push(["property", "shadowBlur", arguments]);
-      return this;
-    }
-  }]);
-  return WeGraphic;
-}();
-
 /**
  * WeCanvas: Easy canvas api for using, support useing chain
  *
@@ -367,25 +100,42 @@ var WeGraphic = function () {
  * - Won't really drawing Canvas until run `draw()`
  *
  */
+var WeCanvas = function () {
+  createClass(WeCanvas, null, [{
+    key: "generatorMethod",
+    value: function generatorMethod() {
+      WeCanvas.hasGeneratored = true;
 
-var WeCanvas = function (_WeGraphic) {
-  inherits(WeCanvas, _WeGraphic);
+      var retangles = ["clearRect", "fillRect", "strokeRect"];
+      var text = ["fillText", "strokeText", "measureText"];
+      var lineStyles = ["lineWidth", "lineCap", "lineJoin"];
+      var textStyles = ["font", "textAlgin", "textBaseline", "direction"];
+      var fillStrokeStyles = ["fillStyle", "strokeStyle"];
+      var paths = ["beginPath", "closePath", "moveTo", "lineTo", "bezierCurveTo", "quadraticCurveTo", "arc", "arcTo", "rect"];
+      var pathsDrawing = ["fill", "stroke"];
+      var transformations = ["rotate", "scale", "translate", "transform", "resetTransform"];
+      var images = ["drawImage"];
+      var pixel = ["createImageData", "getImageData", "putImageData"];
+      var state = ["save", "restore"];
+      var shadow = ['shadowColor', 'shadowBlur'];
+      var _methods = [].concat(retangles, text, lineStyles, textStyles, fillStrokeStyles, paths, pathsDrawing, transformations, images, pixel, state, shadow);
+      return _methods;
+    }
+    /**
+     * create a WeCanvas instance
+     *
+     * @param  {Object} options - option settions for instance
+     */
 
-  /**
-   * create a WeCanvas instance
-   *
-   * @param  {Object} options - option settions for instance
-   */
+  }]);
+
   function WeCanvas(options) {
     classCallCheck(this, WeCanvas);
 
-    var _this = possibleConstructorReturn(this, (WeCanvas.__proto__ || Object.getPrototypeOf(WeCanvas)).call(this));
-
-    _this._rendered = false;
-    _this._init(options);
-    _this.width = _this.canvas.width;
-    _this.height = _this.canvas.height;
-    return _this;
+    this._rendered = false;
+    this._init(options);
+    this.width = this.canvas.width;
+    this.height = this.canvas.height;
   }
   /**
    * init
@@ -402,7 +152,7 @@ var WeCanvas = function (_WeGraphic) {
 
 
   createClass(WeCanvas, [{
-    key: '_init',
+    key: "_init",
     value: function _init() {
       var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
           canvas = _ref.canvas,
@@ -411,11 +161,12 @@ var WeCanvas = function (_WeGraphic) {
           height = _ref.height,
           x = _ref.x,
           y = _ref.y,
-          methods = _ref.methods;
+          _ref$methods = _ref.methods,
+          methods = _ref$methods === undefined ? [] : _ref$methods;
 
       this.canvas = canvas || document.createElement('canvas');
       this._ctx = this.canvas.getContext('2d');
-      this._initMethods(methods);
+      this._initMethods(WeCanvas.hasGeneratored ? methods : WeCanvas.generatorMethod().concat(methods));
       this.setSize(width, height);
       this.setCoordinate(x, y);
       this.setActions(actions);
@@ -428,15 +179,15 @@ var WeCanvas = function (_WeGraphic) {
      */
 
   }, {
-    key: '_initMethods',
+    key: "_initMethods",
     value: function _initMethods() {
-      var _this2 = this;
+      var _this = this;
 
       var methods = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
       methods.reduce(function (hash, method) {
-        if (!_this2[method]) {
-          _this2._proxy(method);
+        if (!_this[method]) {
+          _this._proxy(method);
           hash[method] = true;
         }
         return hash;
@@ -450,19 +201,17 @@ var WeCanvas = function (_WeGraphic) {
      */
 
   }, {
-    key: '_proxy',
+    key: "_proxy",
     value: function _proxy(method) {
-      var _this3 = this;
-
       var prop = this._ctx[method];
       if (prop === undefined) return;
-      this[method] = function () {
+      WeCanvas.prototype[method] = function () {
         for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
           args[_key] = arguments[_key];
         }
 
-        _this3._actions.push([Object.prototype.toString.call(prop) === "[object Function]" ? "method" : "property", method, args]);
-        return _this3;
+        this._actions.push([Object.prototype.toString.call(prop) === "[object Function]" ? "method" : "property", method, args]);
+        return this;
       };
     }
     /**
@@ -473,7 +222,7 @@ var WeCanvas = function (_WeGraphic) {
      */
 
   }, {
-    key: 'setSize',
+    key: "setSize",
     value: function setSize(width, height) {
       if (width && width !== this.width) {
         this.canvas.width = width;
@@ -493,7 +242,7 @@ var WeCanvas = function (_WeGraphic) {
      */
 
   }, {
-    key: 'setStyle',
+    key: "setStyle",
     value: function setStyle(width, height) {
       if (width) {
         this.canvas.style.width = width;
@@ -511,7 +260,7 @@ var WeCanvas = function (_WeGraphic) {
      */
 
   }, {
-    key: 'setCoordinate',
+    key: "setCoordinate",
     value: function setCoordinate() {
       var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
       var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
@@ -527,7 +276,7 @@ var WeCanvas = function (_WeGraphic) {
      */
 
   }, {
-    key: 'setScale',
+    key: "setScale",
     value: function setScale(scale) {
       this._ctx.scale(scale, scale);
     }
@@ -536,19 +285,43 @@ var WeCanvas = function (_WeGraphic) {
      */
 
   }, {
-    key: 'clear',
+    key: "clear",
     value: function clear() {
       this._ctx.clearRect(0, 0, this.width, this.height);
       this.setActions([]);
+    }
+    /**
+     * get actions for context drawing
+     */
+
+  }, {
+    key: "getActions",
+    value: function getActions() {
+      return this._actions;
+    }
+    /**
+     * set actions
+     *
+     * @param {Array} actions - actions for context drawing
+     */
+
+  }, {
+    key: "setActions",
+    value: function setActions() {
+      var actions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+      if (Array.isArray(actions)) {
+        this._actions = actions;
+      }
     }
     /**
      * run actions, draw canvas
      */
 
   }, {
-    key: 'draw',
+    key: "draw",
     value: function draw() {
-      var _this4 = this;
+      var _this2 = this;
 
       var shouldRender = (!this._rendered ? true : !this._cache) && !!this._actions.length;
       if (!shouldRender) return;
@@ -562,9 +335,9 @@ var WeCanvas = function (_WeGraphic) {
         var params = Array.prototype.slice.call(args);
 
         if (type === "method") {
-          _this4._ctx[method].apply(_this4._ctx, params);
+          _this2._ctx[method].apply(_this2._ctx, params);
         } else {
-          _this4._ctx[method] = params[0];
+          _this2._ctx[method] = params[0];
         }
       });
       if (!this._rendered) {
@@ -579,7 +352,7 @@ var WeCanvas = function (_WeGraphic) {
      */
 
   }, {
-    key: 'cache',
+    key: "cache",
     value: function cache() {
       var ifCache = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
 
@@ -590,7 +363,9 @@ var WeCanvas = function (_WeGraphic) {
     }
   }]);
   return WeCanvas;
-}(WeGraphic);
+}();
+
+WeCanvas.hasGeneratored = false;
 
 /**
  * WeStage: Canvas manager for WeCanvas
