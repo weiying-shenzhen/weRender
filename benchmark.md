@@ -2,22 +2,22 @@
 ----------
 使用 `timeit` 打点记时工具，记录了 `WeStage` 有无 `_offscreenCanvas`（离屏缓冲）情况的重绘时间
 
-###数据
+### 数据
 
-- `Android`
+- **`Android`**
 
-无： `key:withoutOffscreen:times.length:1630:average:4.108588957055215`
-有:  `key:offscreen:times.length:1227:average:12.859005704971475`
+  - 无： `key:withoutOffscreen:times.length:1630:average:4.108588957055215`
+  - 有:  `key:offscreen:times.length:1227:average:12.859005704971475`
 
-- `IOS`
+- **`IOS`**
 
-无:  `key:withoutOffscreen:times.length:1215:average:5.57283950617284`
-有:  `key:offscreen:times.length:1385:average:5.624548736462094`
+  - 无:  `key:withoutOffscreen:times.length:1215:average:5.57283950617284`
+  - 有:  `key:offscreen:times.length:1385:average:5.624548736462094`
 
-- `Chrome`
+- **`Chrome`**
 
-无:  `key:withoutOffscreen:times.length:1024:average:0.8701171875`
-有:  `key:offscreen:times.length:1020:average:1.607843137254902`
+  - 无:  `key:withoutOffscreen:times.length:1024:average:0.8701171875`
+  - 有:  `key:offscreen:times.length:1020:average:1.607843137254902`
 
 ### 统计
 | 类别 |有 | 无 |
