@@ -1,6 +1,7 @@
 有无同等屏幕大小的离屏 canvas 性能测试
 ----------
-使用 `timeit` 打点记时工具，记录了 `WeStage` 有无 `_offscreenCanvas`（离屏缓冲）情况的重绘时间
+
+对例子 (`circle-zoom`) 使用 `timeit` 打点记时工具，记录了 `WeStage` 有无 `_offscreenCanvas`（离屏缓冲）情况的重绘时间
 
 ### 数据
 
