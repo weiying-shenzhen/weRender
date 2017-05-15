@@ -6,8 +6,6 @@ Simple, light-weight, Canvas library for easy usage
 
 - `Chain` API
 
-- `Offscreen` drawing
-
 - Drawing `actions` reusable
 
 - Same methods as <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D">CanvasRenderingContext2D</a>
@@ -81,7 +79,6 @@ See examples:
 Usefull Scripts, see:
 
 * <a href="scripts/">scripts</a>
-
 
 # API reference
 
