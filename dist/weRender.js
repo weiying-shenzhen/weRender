@@ -388,7 +388,7 @@ var WeStage = function () {
     }).cache(false);
     this._children = [];
     this._updating = false;
-    this._init(options);
+    this._initOptions(options);
   }
   /**
    * init options for settings
@@ -413,21 +413,6 @@ var WeStage = function () {
       if (typeof ratio === "number") {
         this._ratio = ratio;
       }
-    }
-    /**
-     * init
-     *
-     * @private
-     * @param  {Object} options - options
-     */
-
-  }, {
-    key: "_init",
-    value: function _init(options) {
-      this._initOptions(options);
-      var _canvas = this._canvas,
-          width = _canvas.width,
-          height = _canvas.height;
     }
     /**
      * set stage size

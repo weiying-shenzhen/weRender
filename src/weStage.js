@@ -16,7 +16,7 @@ class WeStage {
       }).cache(false)
       this._children = []
       this._updating = false
-      this._init(options)
+      this._initOptions(options)
     }
     /**
      * init options for settings
@@ -35,19 +35,6 @@ class WeStage {
       if (typeof ratio === "number") {
         this._ratio = ratio
       }
-    }
-    /**
-     * init
-     *
-     * @private
-     * @param  {Object} options - options
-     */
-  _init(options) {
-      this._initOptions(options)
-      const {
-        width,
-        height
-      } = this._canvas
     }
     /**
      * set stage size
