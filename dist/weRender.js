@@ -428,11 +428,6 @@ var WeStage = function () {
       var _canvas = this._canvas,
           width = _canvas.width,
           height = _canvas.height;
-
-      this._offScreenCanvas = new WeCanvas({
-        width: width,
-        height: height
-      }).cache(false);
     }
     /**
      * set stage size
@@ -445,8 +440,7 @@ var WeStage = function () {
     key: "setSize",
     value: function setSize(width, height) {
       this._canvas.setSize(width, height);
-      this._offScreenCanvas.setSize(width, height);
-      this._offScreenCanvas.setScale(this._ratio);
+      this._canvas.setScale(this._ratio);
     }
     /**
      * set stage style
@@ -468,8 +462,7 @@ var WeStage = function () {
     key: "destory",
     value: function destory() {
       this._canvas = null;
-      this._offScreenCanvas = null;
-      this._children = [];
+      this._children.length = 0;
     }
     /**
      * clear canvas
@@ -478,7 +471,6 @@ var WeStage = function () {
   }, {
     key: "clear",
     value: function clear() {
-      this._offScreenCanvas.clear();
       this._canvas.clear();
     }
 
@@ -536,13 +528,12 @@ var WeStage = function () {
       this._translateStage();
       this._drawChildren();
       this._resetCoordinate();
-      this._offScreenCanvas.draw();
       this._updateStage();
       this._updating = false;
       this._children = [];
     }
     /**
-     * translate offscreen canvas
+     * translate stage
      * @private
      */
 
@@ -554,11 +545,11 @@ var WeStage = function () {
             x = _coordinate.x,
             y = _coordinate.y;
 
-        this._offScreenCanvas.translate(x, y);
+        this._canvas.translate(x, y);
       }
     }
     /**
-     * reset coordinate of off screen canvas
+     * reset coordinate
      * @private
      */
 
@@ -570,12 +561,12 @@ var WeStage = function () {
             x = _coordinate2.x,
             y = _coordinate2.y;
 
-        this._offScreenCanvas.translate(-x, -y);
+        this._canvas.translate(-x, -y);
         this._coordinate = null;
       }
     }
     /**
-     * draw children on offscreen canvas
+     * draw children
      * @private
      */
 
@@ -609,7 +600,7 @@ var WeStage = function () {
           height = child.height;
 
       child.draw();
-      this._offScreenCanvas.drawImage(canvas, x, y, width / this._ratio, height / this._ratio);
+      this._canvas.drawImage(canvas, x, y, width / this._ratio, height / this._ratio);
     }
     /**
      * draw child, which is a raw Canvas element
@@ -629,17 +620,16 @@ var WeStage = function () {
           y = _ref2$y === undefined ? 0 : _ref2$y,
           canvas = _ref2.canvas;
 
-      this._offScreenCanvas.drawImage(canvas, x, y, canvas.width / this._ratio, canvas.height / this._ratio);
+      this._canvas.drawImage(canvas, x, y, canvas.width / this._ratio, canvas.height / this._ratio);
     }
     /**
-     * draw offScreen canvas to dom canvas
+     * draw dom canvas
      * @private
      */
 
   }, {
     key: "_updateStage",
     value: function _updateStage() {
-      this._canvas.drawImage(this._offScreenCanvas.canvas, 0, 0);
       this._canvas.draw();
     }
   }]);

@@ -256,10 +256,6 @@ class WeStage {
       width,
       height
     } = this._canvas;
-    this._offScreenCanvas = new WeCanvas({
-      width,
-      height
-    }).cache(false);
   }
   /**
    * set stage size
@@ -269,8 +265,7 @@ class WeStage {
    */
   setSize(width, height) {
     this._canvas.setSize(width, height);
-    this._offScreenCanvas.setSize(width, height);
-    this._offScreenCanvas.setScale(this._ratio);
+    this._canvas.setScale(this._ratio);
   }
   /**
    * set stage style
@@ -286,14 +281,12 @@ class WeStage {
    */
   destory() {
     this._canvas = null;
-    this._offScreenCanvas = null;
-    this._children = [];
+    this._children.length = 0;
   }
   /**
    * clear canvas
    */
   clear() {
-    this._offScreenCanvas.clear();
     this._canvas.clear();
   }
 
@@ -338,13 +331,12 @@ class WeStage {
     this._translateStage();
     this._drawChildren();
     this._resetCoordinate();
-    this._offScreenCanvas.draw();
     this._updateStage();
     this._updating = false;
     this._children = [];
   }
   /**
-   * translate offscreen canvas
+   * translate stage
    * @private
    */
   _translateStage() {
@@ -353,11 +345,11 @@ class WeStage {
         x,
         y
       } = this._coordinate;
-      this._offScreenCanvas.translate(x, y);
+      this._canvas.translate(x, y);
     }
   }
   /**
-   * reset coordinate of off screen canvas
+   * reset coordinate
    * @private
    */
   _resetCoordinate() {
@@ -366,12 +358,12 @@ class WeStage {
         x,
         y
       } = this._coordinate;
-      this._offScreenCanvas.translate(-x, -y);
+      this._canvas.translate(-x, -y);
       this._coordinate = null;
     }
   }
   /**
-   * draw children on offscreen canvas
+   * draw children
    * @private
    */
   _drawChildren() {
@@ -398,7 +390,7 @@ class WeStage {
       height
     } = child;
     child.draw();
-    this._offScreenCanvas.drawImage(canvas, x, y, width / this._ratio, height / this._ratio);
+    this._canvas.drawImage(canvas, x, y, width / this._ratio, height / this._ratio);
   }
   /**
    * draw child, which is a raw Canvas element
@@ -413,14 +405,13 @@ class WeStage {
     y = 0,
     canvas
   }) {
-    this._offScreenCanvas.drawImage(canvas, x, y, canvas.width / this._ratio, canvas.height / this._ratio);
+    this._canvas.drawImage(canvas, x, y, canvas.width / this._ratio, canvas.height / this._ratio);
   }
   /**
-   * draw offScreen canvas to dom canvas
+   * draw dom canvas
    * @private
    */
   _updateStage() {
-    this._canvas.drawImage(this._offScreenCanvas.canvas, 0, 0);
     this._canvas.draw();
   }
 }
