@@ -128,7 +128,7 @@ class WeStage {
       this._children = []
     }
     /**
-     * translate offscreen canvas
+     * translate stage
      * @private
      */
   _translateStage() {
@@ -141,7 +141,7 @@ class WeStage {
       }
     }
     /**
-     * reset coordinate of off screen canvas
+     * reset coordinate
      * @private
      */
   _resetCoordinate() {
@@ -155,7 +155,7 @@ class WeStage {
       }
     }
     /**
-     * draw children on offscreen canvas
+     * draw children
      * @private
      */
   _drawChildren() {
@@ -200,7 +200,7 @@ class WeStage {
       this._canvas.drawImage(canvas, x, y, canvas.width / this._ratio, canvas.height / this._ratio)
     }
     /**
-     * draw offScreen canvas to dom canvas
+     * draw dom canvas
      * @private
      */
   _updateStage() {
