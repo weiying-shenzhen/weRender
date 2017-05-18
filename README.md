@@ -10,6 +10,12 @@ Simple, light-weight, Canvas library for easy usage
 
 - Same methods as <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D">CanvasRenderingContext2D</a>
 
+# Install
+
+```shell
+npm install we-render
+```
+
 # Usage
 
 - **ES6 module**
@@ -120,7 +126,7 @@ WeCanvas: Easy canvas api for using, support useing chain
 - `Property` of `CanvasRenderingContext2D` here is `method`
 - Won't really drawing Canvas until run `draw()`
 
-**Kind**: global class  
+**Kind**: global class
 
 * [WeCanvas](#WeCanvas)
     * [new WeCanvas(options)](#new_WeCanvas_new)
@@ -149,7 +155,7 @@ create a WeCanvas instance
 ### weCanvas.setSize(width, height)
 set canvas size
 
-**Kind**: instance method of <code>[WeCanvas](#WeCanvas)</code>  
+**Kind**: instance method of <code>[WeCanvas](#WeCanvas)</code>
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -161,7 +167,7 @@ set canvas size
 ### weCanvas.setStyle(width, height)
 set canvas style, only width and height
 
-**Kind**: instance method of <code>[WeCanvas](#WeCanvas)</code>  
+**Kind**: instance method of <code>[WeCanvas](#WeCanvas)</code>
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -173,7 +179,7 @@ set canvas style, only width and height
 ### weCanvas.setCoordinate(x, y)
 set coordinate of stage
 
-**Kind**: instance method of <code>[WeCanvas](#WeCanvas)</code>  
+**Kind**: instance method of <code>[WeCanvas](#WeCanvas)</code>
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -185,7 +191,7 @@ set coordinate of stage
 ### weCanvas.setScale(scale)
 set init scale
 
-**Kind**: instance method of <code>[WeCanvas](#WeCanvas)</code>  
+**Kind**: instance method of <code>[WeCanvas](#WeCanvas)</code>
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -196,19 +202,19 @@ set init scale
 ### weCanvas.clear()
 clear canvas
 
-**Kind**: instance method of <code>[WeCanvas](#WeCanvas)</code>  
+**Kind**: instance method of <code>[WeCanvas](#WeCanvas)</code>
 <a name="WeCanvas+getActions"></a>
 
 ### weCanvas.getActions()
 get actions for context drawing
 
-**Kind**: instance method of <code>[WeCanvas](#WeCanvas)</code>  
+**Kind**: instance method of <code>[WeCanvas](#WeCanvas)</code>
 <a name="WeCanvas+setActions"></a>
 
 ### weCanvas.setActions(actions)
 set actions
 
-**Kind**: instance method of <code>[WeCanvas](#WeCanvas)</code>  
+**Kind**: instance method of <code>[WeCanvas](#WeCanvas)</code>
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -219,13 +225,13 @@ set actions
 ### weCanvas.draw()
 run actions, draw canvas
 
-**Kind**: instance method of <code>[WeCanvas](#WeCanvas)</code>  
+**Kind**: instance method of <code>[WeCanvas](#WeCanvas)</code>
 <a name="WeCanvas+cache"></a>
 
 ### weCanvas.cache(ifCache)
 set cache, default: true
 
-**Kind**: instance method of <code>[WeCanvas](#WeCanvas)</code>  
+**Kind**: instance method of <code>[WeCanvas](#WeCanvas)</code>
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -236,7 +242,7 @@ set cache, default: true
 ## WeStage
 WeStage: Canvas manager for WeCanvas
 
-**Kind**: global class  
+**Kind**: global class
 
 * [WeStage](#WeStage)
     * [new WeStage(canvas, options)](#new_WeStage_new)
@@ -264,7 +270,7 @@ create a WeStage instance
 ### weStage.setSize(width, height)
 set stage size
 
-**Kind**: instance method of <code>[WeStage](#WeStage)</code>  
+**Kind**: instance method of <code>[WeStage](#WeStage)</code>
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -276,7 +282,7 @@ set stage size
 ### weStage.setStyle(width, height)
 set stage style
 
-**Kind**: instance method of <code>[WeStage](#WeStage)</code>  
+**Kind**: instance method of <code>[WeStage](#WeStage)</code>
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -288,19 +294,19 @@ set stage style
 ### weStage.destory()
 destrory stage
 
-**Kind**: instance method of <code>[WeStage](#WeStage)</code>  
+**Kind**: instance method of <code>[WeStage](#WeStage)</code>
 <a name="WeStage+clear"></a>
 
 ### weStage.clear()
 clear canvas
 
-**Kind**: instance method of <code>[WeStage](#WeStage)</code>  
+**Kind**: instance method of <code>[WeStage](#WeStage)</code>
 <a name="WeStage+addChild"></a>
 
 ### weStage.addChild(child)
 add child to the stage
 
-**Kind**: instance method of <code>[WeStage](#WeStage)</code>  
+**Kind**: instance method of <code>[WeStage](#WeStage)</code>
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -311,7 +317,7 @@ add child to the stage
 ### weStage.translate(x, y, reset)
 translate stage, move coordinate
 
-**Kind**: instance method of <code>[WeStage](#WeStage)</code>  
+**Kind**: instance method of <code>[WeStage](#WeStage)</code>
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -325,6 +331,6 @@ translate stage, move coordinate
 update stage, draw child on canvas
 **run this method, all child canvas will draw**
 
-**Kind**: instance method of <code>[WeStage](#WeStage)</code>  
+**Kind**: instance method of <code>[WeStage](#WeStage)</code>
 
 *docs autogenerated via [jsdoc2md](https://github.com/jsdoc2md/jsdoc-to-markdown)*
