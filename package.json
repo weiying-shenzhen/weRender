@@ -1,5 +1,5 @@
 {
-  "name": "weRender",
+  "name": "we-render",
   "version": "1.0.0",
   "description": "canvas render engine",
   "main": "src/index.js",
@@ -12,6 +12,10 @@
     "static": "cd examples && python -m SimpleHTTPServer 8000",
     "doc": "./node_modules/.bin/jsdoc2md -t build/README.template.md -f src/*.js > README.md"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weiying-shenzhen/weRender.git"
+  },
   "keywords": [
     "canvas",
     "2d",
@@ -22,6 +26,10 @@
   ],
   "author": "henryluki",
   "license": "MIT",
+   "bugs": {
+    "url": "https://github.com/weiying-shenzhen/weRender/issues"
+  },
+  "homepage": "https://github.com/weiying-shenzhen/weRender#readme",
   "devDependencies": {
     "babel-eslint": "^7.2.2",
     "babel-plugin-external-helpers": "^6.22.0",
