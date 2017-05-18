@@ -1,5 +1,5 @@
 # weRender
-Simple, light-weight, Canvas library for easy usage
+Simple, light-weight, Canvas library for 2D rendering
 
 
 # Features
@@ -22,7 +22,7 @@ npm install we-render
 
 ```javascript
 
-import { WeCanvas, WeRender } from 'weRender'
+import { WeCanvas, WeStage } from 'we-render'
 
 const child = new WeCanvas()
   .setSize(100, 100)
