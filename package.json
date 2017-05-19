@@ -1,8 +1,8 @@
 {
   "name": "we-render",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "canvas render engine",
-  "main": "src/index.js",
+  "main": "dist/weRender.js",
   "scripts": {
     "build": "rollup -c build/es5.config.js",
     "build:es6": "rollup -c build/es6.config.js",
