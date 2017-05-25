@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>circle</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <style type="text/css">
+    body{
+      margin: 0;
+    }
+    #container{
+      height: 100vh;
+      width: 100vw;
+    }
+    #canvas{
+      background-color: #fad7d7;
+    }
+  </style>
+</head>
+<body>
+<div id="container">
+  <canvas id="canvas"></canvas>
+  <div>
+    <p>other examples:</p>
+    <ul>
+      <li><a href="./circle-actions.html">reuse actions</a></li>
+      <li><a href="./circle-clone.html">clone</a></li>
+      <li><a href="./circle-composite.html">composite</a></li>
+      <li><a href="./circle-zoom.html">zoom</a></li>
+    </ul>
+  </div>
+</div>
+<script type="text/javascript" src="./lib/weRender.min.js"></script>
+<script type="text/javascript">
+  var raf = window.requestAnimationFrame;
+
+  function replaceActions(actions, method, args){
+    return actions.reduce(function(acc, action){
+      if (action[1] == method) {
+        acc.push([
+          action[0],
+          method,
+          [args]
+        ]);
+      } else {
+        acc.push(action);
+      }
+      return acc;
+    }, [])
+  }
+
+  var WeStage = weRender.WeStage;
+  var WeCanvas = weRender.WeCanvas;
+
+  var stage = new WeStage(document.querySelector("#canvas"));
+  stage.setSize(500, 500);
+  stage.setStyle("500px", "500px");
+
+  var yellowCircle = new WeCanvas({
+    width: 100,
+    height: 100,
+  })
+  .beginPath()
+  .fillStyle("yellow")
+  .arc(50, 50, 50, 0, 2 * Math.PI)
+  .fill()
+  .draw()
+
+  var purpleCircle = new WeCanvas({
+    actions: replaceActions(yellowCircle.getActions(), "fillStyle", "purple"),
+    width: 100,
+    height: 100,
+  }).draw()
+
+  var i = 10000;
+
+  function render(){
+    if (i == 0) return;
+    i --;
+
+    stage.addChild({
+      canvas: yellowCircle.canvas,
+      x: 100,
+      y: 100 + (i % 200) * 2,
+    });
+    stage.addChild({
+      canvas: purpleCircle.canvas,
+      x: 300,
+      y: 50 + (i % 300) * 1,
+    });
+    stage.update();
+
+    raf(render);
+  }
+  render();
+
+</script>
+</body>
+</html>

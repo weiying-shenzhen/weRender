@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>scroll</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <style type="text/css">
+    body{
+      margin: 0;
+    }
+    #container{
+      height: 100vh;
+      width: 100vw;
+    }
+  </style>
+</head>
+<body>
+<div id="container">
+  <canvas id="canvas"></canvas>
+</div>
+<script type="text/javascript" src="./lib/weRender.min.js"></script>
+<script type="text/javascript" src="./lib/weScroll.min.js"></script>
+<script type="text/javascript">
+
+  var WeStage = weRender.WeStage;
+  var WeCanvas = weRender.WeCanvas;
+
+  var stageEl = document.querySelector("#canvas");
+  var wrapper = stageEl.parentNode;
+  var ratio = window.devicePixelRatio || 1;
+  var stage = new WeStage(stageEl, {
+    ratio: ratio
+  });
+  var canvasWidth = wrapper.clientWidth;
+  var canvasHeight = wrapper.clientHeight;
+
+  stage.setSize(canvasWidth * ratio, canvasHeight * ratio);
+  stage.setStyle(canvasWidth + "px", canvasHeight + "px");
+
+  var zoomed = false;
+  var positionX = positionY = null;
+
+  stageEl.addEventListener("tap", function(e){
+    var pageX = e.pageX;
+    var pageY = e.pageY;
+    var offset = scroller.wrapperOffset;
+    var left = offset.left;
+    var top = offset.top;
+    var pointX = pageX + left - scroller.x;
+    var pointY = pageY + top - scroller.y;
+    var scale = scroller.scale;
+    positionX = pointX / scale;
+    positionY = pointY / scale;
+
+    if (zoomed) return
+
+    requestAnimationFrame(function(){
+      scroller.scrollTo(positionX, positionY);
+    });
+    window.setTimeout(function(){
+      scroller.zoom(2, positionX, positionY);
+      zoomed = true;
+    }, 360);
+
+  }, false);
+
+  var circleWidth = circleHeight = 30;
+  var cache = {};
+
+  function getCircleCanvas(scale, color){
+    var scale = (scale || 1) * ratio;
+    var color = color || "#3BACD9";
+    var key = "" + scale + ":" + color;
+    var canvas = cache[key];
+
+    if (canvas) return canvas;
+    var circle = new WeCanvas({
+      width: circleWidth * scale ,
+      height: circleHeight * scale,
+    })
+    .scale(scale, scale)
+    .beginPath()
+    .fillStyle(color)
+    .arc(15, 15, 10, 0, 2 * Math.PI)
+    .fill()
+    .draw()
+
+    cache[key] = circle.canvas
+    return circle.canvas
+  }
+
+  function isTapped(x, y, pointX, pointY){
+    return (pointX > x && pointX < x + circleWidth) &&
+    (pointY > y && pointY < y + circleHeight)
+  }
+
+  function isVisible(offsetX, offsetY, x, y, canvas){
+    var width = canvas.width;
+    var height = canvas.height;
+
+    return ( x + width + offsetX > 0 && x + offsetX < canvasWidth) &&
+    (y + height + offsetY > 0 && y + offsetY < canvasHeight)
+  }
+
+  var contentWidth = contentHeight = 800;
+
+  var maxRow = Math.floor(contentHeight / circleHeight);
+  var maxCol = Math.floor(contentWidth / circleWidth);
+
+  var render = function(offsetX, offsetY, scale){
+    stage.translate(offsetX, offsetY, true);
+
+    var canvas = getCircleCanvas(scale);
+
+    for (var row = 0; row < maxRow; row ++){
+      for (var col = 0; col < maxCol; col ++) {
+        var x = (col * circleWidth + 10) * scale,
+          y = (row * circleHeight + 10) * scale;
+
+        // if visible
+        if (isVisible(offsetX, offsetY, x, y, canvas)) {
+          var tapped = isTapped(x / scale, y / scale, positionX, positionY)
+          stage.addChild({
+            canvas: tapped ? getCircleCanvas(scale, "red") : canvas,
+            x: x,
+            y: y
+          });
+        }
+      }
+    }
+
+    stage.update();
+  }
+  var zoomMin = canvasWidth / contentWidth;
+  var scroller = new WeScroll(wrapper, {
+    tap: true,
+    disablePointer: true,
+    disableTouch: false,
+    disableMouse: false,
+    zoom: true,
+    zoomMin: zoomMin,
+    startZoom: zoomMin,
+    zoomMax: 2,
+    contentWidth: contentWidth,
+    contentHeight: contentHeight,
+    render: render,
+  });
+
+  setTimeout(function(){
+    scroller.zoom(0.8)
+  }, 300)
+</script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>circle</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <style type="text/css">
+    body{
+      margin: 0;
+    }
+    #container{
+      height: 100vh;
+      width: 100vw;
+    }
+    #canvas{
+      background-color: #fad7d7;
+    }
+  </style>
+</head>
+<body>
+<div id="container">
+  <canvas id="canvas"></canvas>
+</div>
+<script type="text/javascript" src="./lib/weRender.min.js"></script>
+<script type="text/javascript">
+
+  function replaceActions(actions, method, args){
+    return actions.reduce(function(acc, action){
+      if (action[1] == method) {
+        acc.push([
+          action[0],
+          method,
+          [args]
+        ]);
+      } else {
+        acc.push(action);
+      }
+      return acc;
+    }, [])
+  }
+
+  function generateCircles(colors, width, height){
+    var actions;
+
+    return colors.reduce(function(circles, color, index){
+      if (index == 0 ) {
+        var circle = new WeCanvas({
+          width: width,
+          height: height,
+        })
+        .beginPath()
+        .fillStyle(color)
+        .arc(15, 15, 10, 0, 2 * Math.PI)
+        .fill()
+        .draw();
+
+        actions = circle.getActions();
+        circles.push(circle);
+      } else {
+        circles.push(new WeCanvas({
+          actions: replaceActions(actions, "fillStyle", color),
+          width: width,
+          height: height,
+        }).draw())
+      }
+      return circles;
+    }, []);
+  }
+
+  var WeStage = weRender.WeStage;
+  var WeCanvas = weRender.WeCanvas;
+
+  var stage = new WeStage(document.querySelector("#canvas"));
+  stage.setSize(500, 500);
+  stage.setStyle("500px", "500px");
+
+  var width = 30, height = 30;
+
+  var colors = ["red", "orange", "yellow", "green", "cyan", "blue", "purple"];
+  var circles = generateCircles(colors, width, height);
+
+  var maxRow = Math.floor(500 / height);
+  var maxCol = Math.floor(500 / width);
+
+  for (var row = 0; row < maxRow; row ++){
+    for (var col = 0; col < maxCol; col ++) {
+      stage.addChild({
+        canvas: circles[ row * col % 7].canvas,
+        x: col * width + 10,
+        y: row * height + 10
+      })
+    }
+  }
+
+  stage.update();
+
+</script>
+</body>
+</html>
