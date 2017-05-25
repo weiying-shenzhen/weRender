@@ -1,20 +1,19 @@
-# 脚本
+# Scripts
 
-### `svg` 转换成 `canvas`
-
+### `svg` to `canvas`
 
 **`svg` `path` => `canvas` codes**
 
-#### 使用
+#### usage
 
-运行 path.js， 得到 canvas codes
+Run path.js then get canvas codes
 
 ```shell
 node path.js [svg file] [dest file]
 ```
 
-查看脚本用法： `node path.js -h`
+Check usage： `node path.js -h`
 
-#### 例子
+#### examples
 
-查看 `examples/path` 目录下的代码
+See examples under directory`examples/path`
