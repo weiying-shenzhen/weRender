@@ -86,16 +86,7 @@ Usefull Scripts for improving efficiency.
 
 **`SVG` to `Canvas`**
 
-`SVG` `path` can be compiled to `Canvas` codes. Run `path.js` then get `Canvas` codes.
-
-Usage:
-```shell
-node scrpits/path.js [svg file] [dest file]
-```
-With help:
-```shell
-node scrpits/path.js -h
-```
+See: https://github.com/weiying-shenzhen/svgToCanvas
 
 Examples:
 
